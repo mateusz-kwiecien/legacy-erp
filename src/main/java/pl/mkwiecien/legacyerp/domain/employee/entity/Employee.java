@@ -1,4 +1,4 @@
-package pl.mkwiecien.legacyerp.domain;
+package pl.mkwiecien.legacyerp.domain.employee.entity;
 
 import javax.persistence.*;
 
