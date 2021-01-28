@@ -40,7 +40,7 @@ class CreateEmployeeControllerTest {
                 .param("email", EMAIL));
 
         // than :
-        result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+        result.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
         Assertions.assertEquals(1, employeeRepository.count());
     }
 
