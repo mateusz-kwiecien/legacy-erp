@@ -25,6 +25,10 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+    public void deleteEmployee(Long employeeId) {
+        employeeRepository.deleteById(employeeId);
+    }
+
     private Employee createFrom(EmployeeRequest request) {
         return new Employee(request.getFirstName(), request.getLastName(), request.getEmail());
     }

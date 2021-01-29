@@ -1,4 +1,4 @@
-package pl.mkwiecien.legacyerp.domain.employee.controller;
+package pl.mkwiecien.legacyerp.domain.employee.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
