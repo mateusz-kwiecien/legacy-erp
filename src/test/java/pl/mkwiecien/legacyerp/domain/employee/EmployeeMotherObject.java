@@ -34,6 +34,7 @@ public class EmployeeMotherObject {
         private static final String NEW_EMPLOYEE_URI = BASIC_EMPLOYEE_URI + "/new";
         private static final String EMPLOYEE_LIST_URI = BASIC_EMPLOYEE_URI + "/list";
         private static final String DELETE_EMPLOYEE_URI = BASIC_EMPLOYEE_URI + "/delete";
+        private static final String UPDATE_EMPLOYEE_URI = BASIC_EMPLOYEE_URI + "/update";
 
         public static String getDeleteEmployeeUriFor(Long id) {
             return DELETE_EMPLOYEE_URI + "/" + id;
@@ -41,6 +42,10 @@ public class EmployeeMotherObject {
 
         public static String getEmployeeUriFor(Long id) {
             return BASIC_EMPLOYEE_URI + "/" + id;
+        }
+
+        public static String getEmployeeUpdateUriFor(Long id) {
+            return UPDATE_EMPLOYEE_URI + "/" + id;
         }
 
         public static String getBasicEmployeeUri() {
