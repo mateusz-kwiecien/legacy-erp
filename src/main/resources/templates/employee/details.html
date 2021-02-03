@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>LegacyERP</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<div class="container">
+    <div class="container">
+        <div class="navbar">
+            <a href="/">Main</a>
+            <a class="active" href="/employee/list">Employees</a>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Update employee : </h2>
+        <form th:action="@{/employee/update/{id}(id=${employee.id})}" th:object="${employeeRequest}" method="post">
+            <div class="form">
+                <input type="hidden" name="_method" value="PUT">
+                <label>First name : </label>
+                <input type="text" th:field="*{firstName}" th:value="${employee.firstName}"><br>
+                <label>Last name :</label>
+                <input type="text" th:field="*{lastName}" th:value="${employee.lastName}"><br>
+                <label>Email :</label>
+                <input type="text" th:field="*{email}" th:value="${employee.email}"><br>
+                <input type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

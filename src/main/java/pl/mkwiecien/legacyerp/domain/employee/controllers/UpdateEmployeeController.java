@@ -26,6 +26,7 @@ public class UpdateEmployeeController {
     public String showEmployeeDetails(@PathVariable Long employeeId, Model model) {
         Optional<Employee> employee = employeeService.findById(employeeId);
         employee.ifPresent(e -> model.addAttribute("employee", e));
+        model.addAttribute("employeeRequest", new EmployeeRequest());
         return "employee/details";
     }
 

@@ -31,10 +31,11 @@
                 <td colspan="2"> No Employees Available </td>
             </tr>
             <tr th:each="employee : ${employees}">
-                <td><span th:text="${employee.id}"> First Name </span></td>
-                <td><span th:text="${employee.firstName}"> First Name </span></td>
-                <td><span th:text="${employee.lastName}"> First Name </span></td>
-                <td><span th:text="${employee.email}"> Last Name </span></td>
+                <td><span th:text="${employee.id}"/></td>
+                <td><span th:text="${employee.firstName}"/></td>
+                <td><span th:text="${employee.lastName}"/></td>
+                <td><span th:text="${employee.email}"/></td>
+                <td><a th:href="@{/employee/{id}(id=${employee.id})}">Update</a></td>
                 <td><a th:href="@{/employee/delete/{id}(id=${employee.id})}">Delete</a></td>
             </tr>
             </tbody>
