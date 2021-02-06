@@ -20,12 +20,15 @@
         <h2>Create new employee : </h2>
         <form th:action="@{/employee/new}" th:object="${employeeRequest}" method="post">
             <div class="form">
-                    <label>First name : </label>
-                    <input type="text" th:field="*{firstName}"><br>
-                    <label>Last name :</label>
-                    <input type="text" th:field="*{lastName}"><br>
-                    <label>Email :</label>
-                    <input type="text" th:field="*{email}"><br>
+                    <label>First name : </label><br>
+                    <input type="text" th:field="*{firstName}">
+                    <span th:errors="*{firstName}" th:errorclass="inputError"></span><br>
+                    <label>Last name :</label><br>
+                    <input type="text" th:field="*{lastName}">
+                    <span th:errors="*{lastName}" th:errorclass="inputError"></span><br>
+                    <label>Email :</label><br>
+                    <input type="text" th:field="*{email}">
+                    <span th:errors="*{email}" th:errorclass="inputError"></span><br>
                     <input type="submit" value="Save" />
             </div>
         </form>

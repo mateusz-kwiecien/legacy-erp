@@ -5,14 +5,14 @@ import javax.validation.constraints.NotBlank;
 
 public class EmployeeRequest {
 
-    @NotBlank
+    @NotBlank(message = "First name is required")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email is required")
+    @Email(message = "Valid email is required")
     private String email;
 
     public EmployeeRequest() {
