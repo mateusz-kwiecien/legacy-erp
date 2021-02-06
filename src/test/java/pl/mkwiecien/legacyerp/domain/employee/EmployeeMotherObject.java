@@ -9,6 +9,9 @@ import java.util.Random;
 
 public class EmployeeMotherObject {
     public static final String EMAIL_SUFFIX = "@example.com";
+    public static final String FIRST_NAME_PARAM_NAME = "firstName";
+    public static final String LAST_NAME_PARAM_NAME = "lastName";
+    public static final String EMAIL_PARAM_NAME = "email";
 
     public static Employee aRandomEmployee() {
         String firstName = firstNames().get(new Random().nextInt(firstNames().size()));

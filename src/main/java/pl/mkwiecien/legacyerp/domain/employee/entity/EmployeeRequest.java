@@ -1,8 +1,18 @@
 package pl.mkwiecien.legacyerp.domain.employee.entity;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 public class EmployeeRequest {
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @NotBlank
+    @Email
     private String email;
 
     public EmployeeRequest() {
