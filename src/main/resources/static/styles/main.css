@@ -48,3 +48,9 @@
     background-color: #4CAF50;
     color: #f1f1f1;
 }
+
+.inputError
+{
+    font-size: 15px;
+    color: red;
+}
