@@ -5,6 +5,8 @@ import javax.validation.constraints.NotBlank;
 
 public class EmployeeRequest {
 
+    private Long id;
+
     @NotBlank(message = "First name is required")
     private String firstName;
 
@@ -19,6 +21,13 @@ public class EmployeeRequest {
     }
 
     public EmployeeRequest(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public EmployeeRequest(Long id, String firstName, String lastName, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -46,5 +55,27 @@ public class EmployeeRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public static EmployeeRequest from(Employee employee) {
+        return new EmployeeRequest(employee.getId(), employee.getFirstName(), employee.getLastName(),
+                employee.getEmail());
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeRequest{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

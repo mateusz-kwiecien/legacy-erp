@@ -12,3 +12,16 @@ used mostly legacy technologies like Spring MVC
 * H2 database
 * Thymeleaf
 * JUnit 5
+
+## Roadmap
+
+#### TODO :
+
+* Add validation handling for updating employee
+* Add Data Population Service
+* Add more data in Employee model
+* Add Departments and Managers  
+* Improve app view style
+
+#### DONE :
+* ~~Add validation handling for creating employee~~

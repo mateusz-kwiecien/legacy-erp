@@ -17,9 +17,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.*;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EmployeeUriResolver.getEmployeeUpdateUriFor;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EmployeeUriResolver.getEmployeeUriFor;
-import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.aRandomEmployee;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
@@ -42,9 +42,10 @@ class UpdateEmployeeControllerTest {
 
         // then :
         result.andExpect(status().is2xxSuccessful())
-                .andExpect(model().attribute("employee", hasProperty("firstName", is(employee.getFirstName()))))
-                .andExpect(model().attribute("employee", hasProperty("lastName", is(employee.getLastName()))))
-                .andExpect(model().attribute("employee", hasProperty("email", is(employee.getEmail()))));
+                .andExpect(model().attribute("employeeRequest", hasProperty(ID_PARAM_NAME, is(employee.getId()))))
+                .andExpect(model().attribute("employeeRequest", hasProperty(FIRST_NAME_PARAM_NAME, is(employee.getFirstName()))))
+                .andExpect(model().attribute("employeeRequest", hasProperty(LAST_NAME_PARAM_NAME, is(employee.getLastName()))))
+                .andExpect(model().attribute("employeeRequest", hasProperty(EMAIL_PARAM_NAME, is(employee.getEmail()))));
     }
 
     @Test
@@ -53,20 +54,43 @@ class UpdateEmployeeControllerTest {
         Employee employee = employeeRepository.save(aRandomEmployee());
         String employeeUpdateUri = getEmployeeUpdateUriFor(employee.getId());
         String updatedFirstName = "updatedFirstName";
-        String updatedLastName = "updatedFirstName";
-        String updatedEmail = "updatedFirstName";
+        String updatedLastName = "updatedLastName";
+        String updatedEmail = "updatedEmail@example.com";
 
         // when :
         ResultActions result = mockMvc.perform(put(employeeUpdateUri)
-                .param("firstName", updatedFirstName)
-                .param("lastName", updatedLastName)
-                .param("email", updatedEmail));
+                .param(FIRST_NAME_PARAM_NAME, updatedFirstName)
+                .param(LAST_NAME_PARAM_NAME, updatedLastName)
+                .param(EMAIL_PARAM_NAME, updatedEmail));
 
         // then :
         result.andExpect(status().is3xxRedirection());
         Employee updatedEmployee = employeeRepository.findById(employee.getId()).get();
-        assertEquals(updatedEmployee.getFirstName(), updatedFirstName);
-        assertEquals(updatedEmployee.getLastName(), updatedLastName);
-        assertEquals(updatedEmployee.getEmail(), updatedEmail);
+        assertEquals(updatedFirstName, updatedEmployee.getFirstName());
+        assertEquals(updatedLastName, updatedEmployee.getLastName());
+        assertEquals(updatedEmail, updatedEmployee.getEmail());
+    }
+
+    @Test
+    void shouldReturnErrorsAndCreateViewWhenRequestIsIncorrect() throws Exception {
+        // given :
+        Employee existingEmployee = employeeRepository.save(aRandomEmployee());
+        String employeeUpdateUri = getEmployeeUpdateUriFor(existingEmployee.getId());
+        String incorrectEmail = "incorrectEmail";
+        String emptyParamValue = "";
+
+        // when :
+        ResultActions result = mockMvc.perform(put(employeeUpdateUri)
+                .param(FIRST_NAME_PARAM_NAME, emptyParamValue)
+                .param(LAST_NAME_PARAM_NAME, emptyParamValue)
+                .param(EMAIL_PARAM_NAME, incorrectEmail));
+
+        // then :
+        result.andExpect(status().is2xxSuccessful())
+                .andExpect(model().attributeErrorCount("employeeRequest", 3));
+        Employee givenEmployee = employeeRepository.findById(existingEmployee.getId()).get();
+        assertEquals(givenEmployee.getFirstName(), existingEmployee.getFirstName());
+        assertEquals(givenEmployee.getLastName(), existingEmployee.getLastName());
+        assertEquals(givenEmployee.getEmail(), existingEmployee.getEmail());
     }
 }
