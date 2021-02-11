@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class EmployeeMotherObject {
     public static final String EMAIL_SUFFIX = "@example.com";
+    public static final String ID_PARAM_NAME = "id";
     public static final String FIRST_NAME_PARAM_NAME = "firstName";
     public static final String LAST_NAME_PARAM_NAME = "lastName";
     public static final String EMAIL_PARAM_NAME = "email";
@@ -38,13 +39,14 @@ public class EmployeeMotherObject {
         private static final String EMPLOYEE_LIST_URI = BASIC_EMPLOYEE_URI + "/list";
         private static final String DELETE_EMPLOYEE_URI = BASIC_EMPLOYEE_URI + "/delete";
         private static final String UPDATE_EMPLOYEE_URI = BASIC_EMPLOYEE_URI + "/update";
+        private static final String EMPLOYEE_DETAILS_URI = BASIC_EMPLOYEE_URI + "/details";
 
         public static String getDeleteEmployeeUriFor(Long id) {
             return DELETE_EMPLOYEE_URI + "/" + id;
         }
 
         public static String getEmployeeUriFor(Long id) {
-            return BASIC_EMPLOYEE_URI + "/" + id;
+            return EMPLOYEE_DETAILS_URI + "?id=" + id;
         }
 
         public static String getEmployeeUpdateUriFor(Long id) {

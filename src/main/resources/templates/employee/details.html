@@ -18,15 +18,19 @@
     </div>
     <div class="content">
         <h2>Update employee : </h2>
-        <form th:action="@{/employee/update/{id}(id=${employee.id})}" th:object="${employeeRequest}" method="post">
+        <form th:action="@{/employee/update/{id}(id=${employeeRequest.id})}" th:object="${employeeRequest}" method="post">
             <div class="form">
                 <input type="hidden" name="_method" value="PUT">
-                <label>First name : </label>
-                <input type="text" th:field="*{firstName}" th:value="${employee.firstName}"><br>
-                <label>Last name :</label>
-                <input type="text" th:field="*{lastName}" th:value="${employee.lastName}"><br>
-                <label>Email :</label>
-                <input type="text" th:field="*{email}" th:value="${employee.email}"><br>
+                <input type="hidden" th:field="*{id}" th:value="${employeeRequest.id}">
+                <label>First name : </label><br>
+                <input type="text" th:field="*{firstName}">
+                <span th:errors="*{firstName}" th:errorclass="inputError"></span><br>
+                <label>Last name :</label><br>
+                <input type="text" th:field="*{lastName}">
+                <span th:errors="*{lastName}" th:errorclass="inputError"></span><br>
+                <label>Email :</label><br>
+                <input type="text" th:field="*{email}">
+                <span th:errors="*{email}" th:errorclass="inputError"></span><br>
                 <input type="submit" value="Save" />
             </div>
         </form>
