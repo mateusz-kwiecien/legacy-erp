@@ -36,7 +36,11 @@
                 <td><span th:text="${employee.lastName}"/></td>
                 <td><span th:text="${employee.email}"/></td>
                 <td><a th:href="@{/employee/details?id={id}(id=${employee.id})}">Update</a></td>
-                <td><a th:href="@{/employee/delete/{id}(id=${employee.id})}">Delete</a></td>
+                <td>
+                    <form th:action="@{/employee/delete/{id}(id=${employee.id})}" th:method="delete">
+                        <input type="submit" value="DELETE"/>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

@@ -14,7 +14,7 @@ import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EmployeeUriResolver.getDeleteEmployeeUriFor;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.aRandomEmployee;
 
@@ -36,7 +36,7 @@ class DeleteEmployeeControllerTest {
 
         // when :
         String deleteUri = getDeleteEmployeeUriFor(id);
-        ResultActions result = mockMvc.perform(get(deleteUri));
+        ResultActions result = mockMvc.perform(delete(deleteUri));
 
         // than :
         result.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
