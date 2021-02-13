@@ -41,7 +41,7 @@ class CreateEmployeeControllerTest {
                 .param(LAST_NAME_PARAM_NAME, correctEmployee.getLastName())
                 .param(EMAIL_PARAM_NAME, correctEmployee.getEmail()));
 
-        // than :
+        // then :
         result.andExpect(status().is3xxRedirection());
         Assertions.assertEquals(1, employeeRepository.count());
     }

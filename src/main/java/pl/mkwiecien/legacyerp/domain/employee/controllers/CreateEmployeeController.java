@@ -33,7 +33,7 @@ public class CreateEmployeeController {
         if (errors.hasErrors()) {
             return "employee/create";
         }
-        employeeService.createNew(employeeRequest);
+        employeeService.create(employeeRequest);
         return "redirect:/employee/list";
     }
 }
