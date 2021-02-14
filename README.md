@@ -17,11 +17,12 @@ used mostly legacy technologies like Spring MVC
 
 #### TODO :
 
-* Add Data Population Service
 * Add more data in Employee model
 * Add Departments and Managers  
 * Improve app view style
+* Add manual for local run with other db
 
 #### DONE :
 * ~~Add validation handling for creating employee~~
 * ~~Add validation handling for updating employee~~
+* ~~Add Data Population Service~~

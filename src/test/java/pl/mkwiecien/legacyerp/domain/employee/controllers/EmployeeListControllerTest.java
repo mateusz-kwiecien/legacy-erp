@@ -44,7 +44,7 @@ class EmployeeListControllerTest {
         // when :
         ResultActions result = mockMvc.perform(get(EMPLOYEE_LIST_URI));
 
-        // than :
+        // then :
         result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.model().attribute("employees", Matchers.hasSize(2)));
     }

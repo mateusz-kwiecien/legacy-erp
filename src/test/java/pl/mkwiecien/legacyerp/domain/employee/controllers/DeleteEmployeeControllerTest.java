@@ -38,7 +38,7 @@ class DeleteEmployeeControllerTest {
         String deleteUri = getDeleteEmployeeUriFor(id);
         ResultActions result = mockMvc.perform(delete(deleteUri));
 
-        // than :
+        // then :
         result.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
         assertTrue(employeeRepository.findById(id).isEmpty());
     }
