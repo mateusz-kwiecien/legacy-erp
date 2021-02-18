@@ -17,10 +17,13 @@ used mostly legacy technologies like Spring MVC
 
 #### TODO :
 
+* Add Departments and Managers
 * Add more data in Employee model
-* Add Departments and Managers  
+* Add pagination to lists (e.g. employees list)
+* Add sorting option for lists
 * Improve app view style
 * Add manual for local run with other db
+* Release first version on Heroku
 
 #### DONE :
 * ~~Add validation handling for creating employee~~

@@ -18,11 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.*;
-import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EmployeeUriResolver.getNewEmployeeUri;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class CreateEmployeeControllerTest {
+
+    private static final String NEW_EMPLOYEE_URI = "/employee/new";
 
     @Autowired
     MockMvc mockMvc;
@@ -33,10 +34,10 @@ class CreateEmployeeControllerTest {
     @Test
     void shouldAddNewEmployeeFromRequestAndSaveInRepository() throws Exception {
         // given :
-        Employee correctEmployee = EmployeeMotherObject.aRandomEmployee();
+        Employee correctEmployee = EmployeeMotherObject.anEmployee();
 
         // when :
-        ResultActions result = mockMvc.perform(post(getNewEmployeeUri())
+        ResultActions result = mockMvc.perform(post(NEW_EMPLOYEE_URI)
                 .param(FIRST_NAME_PARAM_NAME, correctEmployee.getFirstName())
                 .param(LAST_NAME_PARAM_NAME, correctEmployee.getLastName())
                 .param(EMAIL_PARAM_NAME, correctEmployee.getEmail()));
@@ -53,7 +54,7 @@ class CreateEmployeeControllerTest {
         String emptyParamValue = "";
 
         // when :
-        ResultActions result = mockMvc.perform(post(getNewEmployeeUri())
+        ResultActions result = mockMvc.perform(post(NEW_EMPLOYEE_URI)
                 .param(FIRST_NAME_PARAM_NAME, emptyParamValue)
                 .param(LAST_NAME_PARAM_NAME, emptyParamValue)
                 .param(EMAIL_PARAM_NAME, incorrectEmail));
