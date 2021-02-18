@@ -18,12 +18,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.*;
-import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EmployeeUriResolver.getEmployeeUpdateUriFor;
-import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EmployeeUriResolver.getEmployeeUriFor;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class UpdateEmployeeControllerTest {
+
+    private static final String EMPLOYEE_UPDATE_URI = "/employee/update/";
+    private static final String EMPLOYEE_DETAILS_URI = "/employee/details?id=";
 
     @Autowired
     MockMvc mockMvc;
@@ -34,8 +35,8 @@ class UpdateEmployeeControllerTest {
     @Test
     void shouldRetrieveEmployeeModel() throws Exception {
         // given :
-        Employee employee = employeeRepository.save(aRandomEmployee());
-        String employeeDetailsUri = getEmployeeUriFor(employee.getId());
+        Employee employee = employeeRepository.save(anEmployee());
+        String employeeDetailsUri = EMPLOYEE_DETAILS_URI + employee.getId();
 
         // when :
         ResultActions result = mockMvc.perform(get(employeeDetailsUri));
@@ -51,8 +52,8 @@ class UpdateEmployeeControllerTest {
     @Test
     void shouldUpdateGivenEmployee() throws Exception {
         // given :
-        Employee employee = employeeRepository.save(aRandomEmployee());
-        String employeeUpdateUri = getEmployeeUpdateUriFor(employee.getId());
+        Employee employee = employeeRepository.save(anEmployee());
+        String employeeUpdateUri = EMPLOYEE_UPDATE_URI + employee.getId();
         String updatedFirstName = "updatedFirstName";
         String updatedLastName = "updatedLastName";
         String updatedEmail = "updatedEmail@example.com";
@@ -74,8 +75,8 @@ class UpdateEmployeeControllerTest {
     @Test
     void shouldReturnErrorsAndCreateViewWhenRequestIsIncorrect() throws Exception {
         // given :
-        Employee existingEmployee = employeeRepository.save(aRandomEmployee());
-        String employeeUpdateUri = getEmployeeUpdateUriFor(existingEmployee.getId());
+        Employee existingEmployee = employeeRepository.save(anEmployee());
+        String employeeUpdateUri = EMPLOYEE_UPDATE_URI + existingEmployee.getId();
         String incorrectEmail = "incorrectEmail";
         String emptyParamValue = "";
 
