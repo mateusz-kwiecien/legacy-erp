@@ -2,6 +2,7 @@ package pl.mkwiecien.legacyerp.domain.employee.service;
 
 import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
+import pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
 import pl.mkwiecien.legacyerp.domain.employee.ports.CreateEmployeePort;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService implements CreateEmployeePort {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -48,7 +49,12 @@ public class EmployeeService implements CreateEmployeePort {
     }
 
     private Employee createFrom(EmployeeRequest request) {
-        return new Employee(request.getFirstName(), request.getLastName(), request.getEmail());
+        return Builder.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .department(request.getDepartment())
+                .build();
     }
 
     private List<Employee> createFrom(List<EmployeeRequest> employeeRequests) {
