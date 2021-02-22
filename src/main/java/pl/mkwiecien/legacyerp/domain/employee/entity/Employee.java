@@ -1,8 +1,13 @@
 package pl.mkwiecien.legacyerp.domain.employee.entity;
 
+import pl.mkwiecien.legacyerp.domain.department.entity.Department;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
+@Table(name = "EMPLOYEE")
 public class Employee {
 
     @Id
@@ -10,22 +15,32 @@ public class Employee {
     @Column(name = "ID")
     private Long id;
 
+    @NotNull
     @Column(name = "FIRST_NAME")
     private String firstName;
 
+    @NotNull
     @Column(name = "LAST_NAME")
     private String lastName;
 
+    @NotNull
     @Column(name = "EMAIL")
     private String email;
+
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Department department;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String email) {
+    private Employee(Long id, String firstName, String lastName, String email, Department department) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.department = department;
     }
 
     public Long getId() {
@@ -60,13 +75,77 @@ public class Employee {
         this.email = email;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id.equals(employee.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public static final class Builder {
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Department department;
+
+        private Builder() {
+        }
+
+        public static Builder builder() {
+            return new Builder();
+        }
+
+        public Builder from(Employee employee) {
+            this.id = employee.getId();
+            this.firstName = employee.getFirstName();
+            this.lastName = employee.getLastName();
+            this.email = employee.getEmail();
+            this.department = employee.getDepartment();
+            return this;
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder department(Department department) {
+            this.department = department;
+            return this;
+        }
+
+        public Employee build() {
+            return new Employee(this.id, this.firstName, this.lastName, this.email, this.department);
+        }
     }
 }

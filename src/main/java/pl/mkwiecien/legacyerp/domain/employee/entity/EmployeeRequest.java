@@ -1,5 +1,7 @@
 package pl.mkwiecien.legacyerp.domain.employee.entity;
 
+import pl.mkwiecien.legacyerp.domain.department.entity.Department;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -16,6 +18,8 @@ public class EmployeeRequest {
     @NotBlank(message = "Email is required")
     @Email(message = "Valid email is required")
     private String email;
+
+    private Department department;
 
     public EmployeeRequest() {
     }
@@ -65,6 +69,14 @@ public class EmployeeRequest {
         this.id = id;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public static EmployeeRequest from(Employee employee) {
         return new EmployeeRequest(employee.getId(), employee.getFirstName(), employee.getLastName(),
                 employee.getEmail());
@@ -73,9 +85,11 @@ public class EmployeeRequest {
     @Override
     public String toString() {
         return "EmployeeRequest{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", department=" + department +
                 '}';
     }
 }

@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployeeWith;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
@@ -60,9 +61,8 @@ class EmployeeListControllerTest {
     }
 
     private List<Employee> anEmployeesList() {
-        Employee first = new Employee(FIRST_EMPLOYEE_FIRST_NAME, FIRST_EMPLOYEE_LAST_NAME, FIRST_EMPLOYEE_EMAIL);
-        Employee second = new Employee(SECOND_EMPLOYEE_FIRST_NAME, SECOND_EMPLOYEE_LAST_NAME, SECOND_EMPLOYEE_EMAIL);
+        Employee first = anEmployeeWith(FIRST_EMPLOYEE_FIRST_NAME, FIRST_EMPLOYEE_LAST_NAME, FIRST_EMPLOYEE_EMAIL);
+        Employee second = anEmployeeWith(SECOND_EMPLOYEE_FIRST_NAME, SECOND_EMPLOYEE_LAST_NAME, SECOND_EMPLOYEE_EMAIL);
         return Arrays.asList(first, second);
     }
-
 }

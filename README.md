@@ -17,7 +17,6 @@ used mostly legacy technologies like Spring MVC
 
 #### TODO :
 
-* Add Departments and Managers
 * Add more data in Employee model
 * Add pagination to lists (e.g. employees list)
 * Add sorting option for lists
@@ -29,3 +28,4 @@ used mostly legacy technologies like Spring MVC
 * ~~Add validation handling for creating employee~~
 * ~~Add validation handling for updating employee~~
 * ~~Add Data Population Service~~
+* ~~Add Departments and Managers~~
