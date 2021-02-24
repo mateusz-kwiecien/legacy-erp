@@ -1,9 +1,12 @@
 package pl.mkwiecien.legacyerp.domain.department.entity;
 
+import javax.validation.constraints.NotNull;
+
 public class DepartmentRequest {
 
     private Long id;
 
+    @NotNull(message = "Managers id is required")
     private Long managerId;
 
     public DepartmentRequest(Long id, Long managerId) {

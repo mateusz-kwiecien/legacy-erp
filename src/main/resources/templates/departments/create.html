@@ -12,15 +12,20 @@
 <div class="container">
     <div class="container">
         <div class="navbar">
-            <a class="active" href="/">Main</a>
+            <a href="/">Main</a>
             <a href="/employee/list">Employees</a>
-            <a href="/departments">Departments</a>
+            <a class="active" href="/departments">Departments</a>
         </div>
     </div>
     <div class="content">
-        <h2>Main page</h2>
-        <form th:action="@{/util/populate/employees}" method="post">
-            <input type="submit" value="Populate" />
+        <h2>Create new department : </h2>
+        <form th:action="@{/departments}" th:object="${departmentRequest}" method="post">
+            <div class="form">
+                    <label>Manager ID : </label><br>
+                    <input type="text" th:field="*{managerId}">
+                    <span th:errors="*{managerId}" th:errorclass="inputError"></span><br>
+                    <input type="submit" value="Save" />
+            </div>
         </form>
     </div>
 </div>

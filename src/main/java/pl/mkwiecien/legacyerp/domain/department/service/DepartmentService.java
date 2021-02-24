@@ -5,6 +5,8 @@ import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentRequest;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 
+import java.util.List;
+
 @Service
 public class DepartmentService {
 
@@ -12,6 +14,10 @@ public class DepartmentService {
 
     public DepartmentService(DepartmentRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Department> retrieveAll() {
+        return repository.findAll();
     }
 
     public Department crete(DepartmentRequest request) {

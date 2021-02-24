@@ -17,6 +17,10 @@ used mostly legacy technologies like Spring MVC
 
 #### TODO :
 
+* Add update and delete department controllers
+* Update department creating view (assign manager by list, not id input)  
+* Create department view, with number of employees
+* Add department info to employee view  
 * Add more data in Employee model
 * Add pagination to lists (e.g. employees list)
 * Add sorting option for lists
