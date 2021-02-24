@@ -5,7 +5,10 @@ import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentRequest;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 
+import java.util.Collections;
 import java.util.List;
+
+import static pl.mkwiecien.legacyerp.domain.department.entity.Department.Builder.builder;
 
 @Service
 public class DepartmentService {
@@ -25,6 +28,11 @@ public class DepartmentService {
     }
 
     private Department from(DepartmentRequest request) {
-        return new Department(request.getManagerId());
+        return builder()
+                .id(request.getId())
+                .name(request.getName())
+                .managerId(request.getManagerId())
+                .employees(Collections.emptyList())
+                .build();
     }
 }

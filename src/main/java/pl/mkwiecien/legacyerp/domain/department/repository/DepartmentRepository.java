@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 
 @Repository
+@Transactional
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
-    @Transactional
     @Modifying
     @Query("DELETE FROM Department")
     void deleteAll();

@@ -10,11 +10,11 @@ import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import java.util.List;
 
 @Repository
+@Transactional
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAll();
 
-    @Transactional
     @Modifying
     @Query("DELETE FROM Employee")
     void deleteAll();

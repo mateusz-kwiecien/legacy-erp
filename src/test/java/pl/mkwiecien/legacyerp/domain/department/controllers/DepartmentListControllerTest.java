@@ -18,11 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.aDepartmentWith;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class DepartmentListControllerTest {
-
     private static final String DEPARTMENTS_URI = "/departments";
 
     @Autowired
@@ -45,7 +45,7 @@ class DepartmentListControllerTest {
     }
 
     private static List<Department> existingDepartments() {
-        return Arrays.asList(new Department(1L), new Department(2L));
+        return Arrays.asList(aDepartmentWith(1L), aDepartmentWith(2L));
     }
 
     @BeforeEach

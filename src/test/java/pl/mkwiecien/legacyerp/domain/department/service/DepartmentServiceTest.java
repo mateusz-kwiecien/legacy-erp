@@ -17,6 +17,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEPARTMENT_NAME;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.aDepartmentWith;
 
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class DepartmentServiceTest {
@@ -37,7 +39,7 @@ class DepartmentServiceTest {
             Employee departmentManager = employeeRepository.findAll().get(0);
             Employee firstDepartmentEmployee = employeeRepository.findAll().get(1);
             Employee secondDepartmentEmployee = employeeRepository.findAll().get(2);
-            Department aDepartment = departmentRepository.save(new Department(departmentManager.getId()));
+            Department aDepartment = departmentRepository.save(aDepartmentWith(departmentManager.getId()));
 
         // when :
             firstDepartmentEmployee.setDepartment(aDepartment);
@@ -46,6 +48,7 @@ class DepartmentServiceTest {
 
         // then :
             assertEquals(departmentManager.getId(), departmentRepository.findAll().get(0).getManagerId());
+            assertEquals(DEPARTMENT_NAME, departmentRepository.findAll().get(0).getName());
             assertTrue(departmentRepository.findAll().get(0).getEmployees().contains(firstDepartmentEmployee));
             assertTrue(departmentRepository.findAll().get(0).getEmployees().contains(secondDepartmentEmployee));
             assertEquals(3, employeeRepository.findAll().size());
