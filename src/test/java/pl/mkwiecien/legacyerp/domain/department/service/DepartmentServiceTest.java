@@ -1,5 +1,7 @@
 package pl.mkwiecien.legacyerp.domain.department.service;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +31,7 @@ class DepartmentServiceTest {
     private DataPopulationService dataPopulationService;
 
     @Test
-    public void shouldSaveAndProperlyRetrievedDepartmentData() throws Exception {
+    void shouldSaveAndProperlyRetrievedDepartmentData() throws Exception {
         // given :
             dataPopulationService.populateWithRandomData(Optional.of(3));
             Employee departmentManager = employeeRepository.findAll().get(0);
@@ -48,5 +50,16 @@ class DepartmentServiceTest {
             assertTrue(departmentRepository.findAll().get(0).getEmployees().contains(secondDepartmentEmployee));
             assertEquals(3, employeeRepository.findAll().size());
             assertEquals(1, departmentRepository.findAll().size());
+    }
+
+    @BeforeEach
+    void setup() {
+        cleanup();
+    }
+
+    @AfterEach
+    void cleanup() {
+        employeeRepository.deleteAll();
+        departmentRepository.deleteAll();
     }
 }

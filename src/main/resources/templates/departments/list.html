@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees list</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+        <a href="/">Main</a>
+        <a href="/employee/list">Employees</a>
+        <a class="active" href="/departments">Departments</a>
+    </div>
+    <div class="content">
+        <h2>Departments list</h2>
+        <a href="/departments/create">Create new</a>
+        <table>
+            <thead>
+            <tr>
+                <th> ID </th>
+                <th> Manager ID </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#arrays.isEmpty(departments)}">
+                <td colspan="2"> No Departments Available </td>
+            </tr>
+            <tr th:each="department : ${departments}">
+                <td><span th:text="${department.id}"/></td>
+                <td><span th:text="${department.managerId}"/></td>
+                <td><a th:href="@{/departments/details?id={id}(id=${department.id})}">Update</a></td>
+                <td>
+                    <form th:action="@{/departments/delete/{id}(id=${department.id})}" th:method="delete">
+                        <input type="submit" value="DELETE"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
