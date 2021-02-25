@@ -6,17 +6,10 @@ public class DepartmentRequest {
 
     private Long id;
 
-    @NotNull(message = "Managers id is required")
+    @NotNull(message = "Department name is required")
+    private String name;
+
     private Long managerId;
-
-    public DepartmentRequest(Long id, Long managerId) {
-        this.id = id;
-        this.managerId = managerId;
-    }
-
-    public DepartmentRequest(Long managerId) {
-        this.managerId = managerId;
-    }
 
     public DepartmentRequest() {
     }
@@ -35,5 +28,13 @@ public class DepartmentRequest {
 
     public void setManagerId(Long managerId) {
         this.managerId = managerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

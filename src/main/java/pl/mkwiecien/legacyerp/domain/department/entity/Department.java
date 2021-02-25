@@ -16,6 +16,9 @@ public class Department {
     private Long id;
 
     @NotNull
+    @Column(name = "NAME", nullable = false)
+    private String name;
+
     @Column(name = "MANAGER_ID")
     private Long managerId;
 
@@ -25,16 +28,14 @@ public class Department {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Employee> employees;
 
-    public Department(Long id, Long managerId) {
-        this.id = id;
-        this.managerId = managerId;
-    }
-
-    public Department(Long managerId) {
-        this.managerId = managerId;
-    }
-
     public Department() {
+    }
+
+    private Department(Long id, String name, Long managerId, List<Employee> employees) {
+        this.id = id;
+        this.name = name;
+        this.managerId = managerId;
+        this.employees = employees;
     }
 
     public Long getId() {
@@ -43,6 +44,14 @@ public class Department {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getManagerId() {
@@ -59,5 +68,57 @@ public class Department {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+
+    public static final class Builder {
+        private Long id;
+        private String name;
+        private Long managerId;
+        private List<Employee> employees;
+
+        private Builder() {
+        }
+
+        public static Builder builder() {
+            return new Builder();
+        }
+
+        public Builder from(Department department) {
+            this.id = department.getId();
+            this.name = department.getName();
+            this.managerId = department.getManagerId();
+            this.employees = department.getEmployees();
+            return this;
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder managerId(Long managerId) {
+            this.managerId = managerId;
+            return this;
+        }
+
+        public Builder employees(List<Employee> employees) {
+            this.employees = employees;
+            return this;
+        }
+
+        public Department build() {
+            Department department = new Department();
+            department.setId(id);
+            department.setName(name);
+            department.setManagerId(managerId);
+            department.setEmployees(employees);
+            return department;
+        }
     }
 }

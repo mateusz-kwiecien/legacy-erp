@@ -14,6 +14,7 @@ import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEPARTMENT_NAME;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
@@ -34,7 +35,8 @@ class CreateDepartmentControllerTest {
 
         // when :
         ResultActions result = mockMvc.perform(post(DEPARTMENTS_URI)
-                .param("managerId", managerId.toString()));
+                .param("managerId", managerId.toString())
+                .param("name", DEPARTMENT_NAME));
 
         // then :
         result.andExpect(status().is3xxRedirection());
