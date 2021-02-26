@@ -5,6 +5,7 @@ import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
 import pl.mkwiecien.legacyerp.domain.employee.ports.CreateEmployeePort;
+import pl.mkwiecien.legacyerp.domain.employee.ports.FindEmployeePort;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeService implements CreateEmployeePort {
+public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
 
     private final EmployeeRepository employeeRepository;
 
@@ -30,18 +31,25 @@ public class EmployeeService implements CreateEmployeePort {
         return employeeRepository.saveAll(createFrom(employeeRequests));
     }
 
+    @Override
     public Optional<Employee> findById(Long employeeId) {
         return employeeRepository.findById(employeeId);
+    }
+
+    @Override
+    public List<Employee> findAll() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public List<Employee> findAllByDepartmentId(Long departmentId) {
+        return employeeRepository.findAllByDepartmentId(departmentId);
     }
 
     public Employee update(Long employeeId, EmployeeRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);
         return employeeRepository.save(updateFrom(employee, request));
-    }
-
-    public List<Employee> retrieveAll() {
-        return employeeRepository.findAll();
     }
 
     public void deleteEmployee(Long employeeId) {

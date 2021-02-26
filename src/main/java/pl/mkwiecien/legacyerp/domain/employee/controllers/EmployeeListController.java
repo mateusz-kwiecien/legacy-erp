@@ -21,7 +21,7 @@ public class EmployeeListController {
 
     @GetMapping("/list")
     public String retrieveAll(Model model) {
-        List<Employee> employees = employeeService.retrieveAll();
+        List<Employee> employees = employeeService.findAll();
         model.addAttribute("employees", employees);
         return "employee/list";
     }

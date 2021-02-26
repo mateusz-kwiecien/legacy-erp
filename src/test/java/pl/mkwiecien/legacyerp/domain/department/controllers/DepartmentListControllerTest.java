@@ -18,12 +18,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEPARTMENTS_URI;
 import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.aDepartmentWith;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class DepartmentListControllerTest {
-    private static final String DEPARTMENTS_URI = "/departments";
 
     @Autowired
     MockMvc mockMvc;
