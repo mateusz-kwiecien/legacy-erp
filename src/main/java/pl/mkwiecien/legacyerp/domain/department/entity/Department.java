@@ -4,7 +4,7 @@ import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "DEPARTMENT")
@@ -26,12 +26,12 @@ public class Department {
             fetch = FetchType.EAGER,
             mappedBy = "department",
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Employee> employees;
+    private Set<Employee> employees;
 
     public Department() {
     }
 
-    private Department(Long id, String name, Long managerId, List<Employee> employees) {
+    private Department(Long id, String name, Long managerId, Set<Employee> employees) {
         this.id = id;
         this.name = name;
         this.managerId = managerId;
@@ -62,11 +62,11 @@ public class Department {
         this.managerId = managerId;
     }
 
-    public List<Employee> getEmployees() {
+    public Set<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<Employee> employees) {
+    public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
 
@@ -75,7 +75,7 @@ public class Department {
         private Long id;
         private String name;
         private Long managerId;
-        private List<Employee> employees;
+        private Set<Employee> employees;
 
         private Builder() {
         }
@@ -107,7 +107,7 @@ public class Department {
             return this;
         }
 
-        public Builder employees(List<Employee> employees) {
+        public Builder employees(Set<Employee> employees) {
             this.employees = employees;
             return this;
         }

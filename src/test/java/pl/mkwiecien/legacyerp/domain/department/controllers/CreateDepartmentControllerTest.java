@@ -14,13 +14,12 @@ import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEPARTMENTS_URI;
 import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEPARTMENT_NAME;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class CreateDepartmentControllerTest {
-
-    private static final String DEPARTMENTS_URI = "/departments";
 
     @Autowired
     MockMvc mockMvc;

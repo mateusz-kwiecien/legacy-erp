@@ -9,7 +9,7 @@ import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 
 @Repository
 @Transactional
-public interface DepartmentRepository extends JpaRepository<Department, Long> {
+public interface DepartmentRepository extends JpaRepository<Department, Long>, DepartmentCustomRepository {
 
     @Modifying
     @Query("DELETE FROM Department")

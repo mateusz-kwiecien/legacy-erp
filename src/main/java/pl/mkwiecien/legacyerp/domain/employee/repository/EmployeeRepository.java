@@ -18,4 +18,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Modifying
     @Query("DELETE FROM Employee")
     void deleteAll();
+
+    List<Employee> findAllByDepartmentId(Long departmentId);
 }

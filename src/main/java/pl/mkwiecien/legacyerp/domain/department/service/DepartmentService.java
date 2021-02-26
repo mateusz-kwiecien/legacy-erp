@@ -23,8 +23,12 @@ public class DepartmentService {
         return repository.findAll();
     }
 
-    public Department crete(DepartmentRequest request) {
+    public Department create(DepartmentRequest request) {
         return repository.save(from(request));
+    }
+
+    public void delete(Long id) {
+        repository.deleteDepartmentById(id);
     }
 
     private Department from(DepartmentRequest request) {
@@ -32,7 +36,7 @@ public class DepartmentService {
                 .id(request.getId())
                 .name(request.getName())
                 .managerId(request.getManagerId())
-                .employees(Collections.emptyList())
+                .employees(Collections.emptySet())
                 .build();
     }
 }
