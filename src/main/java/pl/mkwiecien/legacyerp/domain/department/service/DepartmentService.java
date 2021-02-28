@@ -3,6 +3,7 @@ package pl.mkwiecien.legacyerp.domain.department.service;
 import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentRequest;
+import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentDAO;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 
 import java.util.Collections;
@@ -15,8 +16,11 @@ public class DepartmentService {
 
     private final DepartmentRepository repository;
 
-    public DepartmentService(DepartmentRepository repository) {
+    private final DepartmentDAO departmentDAO;
+
+    public DepartmentService(DepartmentRepository repository, DepartmentDAO departmentDAO) {
         this.repository = repository;
+        this.departmentDAO = departmentDAO;
     }
 
     public List<Department> retrieveAll() {
@@ -28,7 +32,7 @@ public class DepartmentService {
     }
 
     public void delete(Long id) {
-        repository.deleteDepartmentById(id);
+        departmentDAO.deleteDepartmentById(id);
     }
 
     private Department from(DepartmentRequest request) {

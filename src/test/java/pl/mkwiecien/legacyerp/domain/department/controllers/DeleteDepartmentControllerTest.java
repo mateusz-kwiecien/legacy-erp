@@ -2,6 +2,7 @@ package pl.mkwiecien.legacyerp.domain.department.controllers;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.hamcrest.core.Every.everyItem;
 import static org.hamcrest.core.Is.is;
@@ -43,7 +45,7 @@ class DeleteDepartmentControllerTest {
     @Autowired
     private DataPopulationService dataPopulationService;
 
-    // TODO implement department deleting logic
+    @Test
     void shouldDeleteDepartmentAndRemoveDepartmentIdFromGivenEmployees() throws Exception {
         // given :
         dataPopulationService.populateWithRandomData(Optional.of(3));
@@ -63,7 +65,7 @@ class DeleteDepartmentControllerTest {
         result.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
         assertEquals(3, employeeRepository.findAll().size());
         assertEquals(0, departmentRepository.findAll().size());
-        assertThat(employeeRepository.findAll(), everyItem(hasProperty("department", is(null))));
+        assertThat(employeeRepository.findAll(), everyItem(hasProperty("department", is(nullValue()))));
     }
 
     @BeforeEach
