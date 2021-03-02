@@ -12,7 +12,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "EMPLOYEE_ID")
     private Long id;
 
     @NotNull
@@ -30,6 +30,7 @@ public class Employee {
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "DEPARTMENT_ID")
     private Department department;
 
     public Employee() {

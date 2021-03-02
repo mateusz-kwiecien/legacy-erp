@@ -8,6 +8,7 @@ import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static pl.mkwiecien.legacyerp.domain.department.entity.Department.Builder.builder;
 
@@ -21,6 +22,10 @@ public class DepartmentService {
     public DepartmentService(DepartmentRepository repository, DepartmentDAO departmentDAO) {
         this.repository = repository;
         this.departmentDAO = departmentDAO;
+    }
+
+    public Optional<Department> findById(Long departmentId) {
+        return repository.findById(departmentId);
     }
 
     public List<Department> retrieveAll() {

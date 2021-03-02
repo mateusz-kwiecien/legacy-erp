@@ -43,10 +43,10 @@ class UpdateEmployeeControllerTest {
 
         // then :
         result.andExpect(status().is2xxSuccessful())
-                .andExpect(model().attribute("employeeRequest", hasProperty(ID_PARAM_NAME, is(employee.getId()))))
-                .andExpect(model().attribute("employeeRequest", hasProperty(FIRST_NAME_PARAM_NAME, is(employee.getFirstName()))))
-                .andExpect(model().attribute("employeeRequest", hasProperty(LAST_NAME_PARAM_NAME, is(employee.getLastName()))))
-                .andExpect(model().attribute("employeeRequest", hasProperty(EMAIL_PARAM_NAME, is(employee.getEmail()))));
+                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_ID_PARAM_NAME, is(employee.getId()))))
+                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_FIRST_NAME_PARAM_NAME, is(employee.getFirstName()))))
+                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_LAST_NAME_PARAM_NAME, is(employee.getLastName()))))
+                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_EMAIL_PARAM_NAME, is(employee.getEmail()))));
     }
 
     @Test
@@ -60,9 +60,9 @@ class UpdateEmployeeControllerTest {
 
         // when :
         ResultActions result = mockMvc.perform(put(employeeUpdateUri)
-                .param(FIRST_NAME_PARAM_NAME, updatedFirstName)
-                .param(LAST_NAME_PARAM_NAME, updatedLastName)
-                .param(EMAIL_PARAM_NAME, updatedEmail));
+                .param(EMPLOYEE_FIRST_NAME_PARAM_NAME, updatedFirstName)
+                .param(EMPLOYEE_LAST_NAME_PARAM_NAME, updatedLastName)
+                .param(EMPLOYEE_EMAIL_PARAM_NAME, updatedEmail));
 
         // then :
         result.andExpect(status().is3xxRedirection());
@@ -82,9 +82,9 @@ class UpdateEmployeeControllerTest {
 
         // when :
         ResultActions result = mockMvc.perform(put(employeeUpdateUri)
-                .param(FIRST_NAME_PARAM_NAME, emptyParamValue)
-                .param(LAST_NAME_PARAM_NAME, emptyParamValue)
-                .param(EMAIL_PARAM_NAME, incorrectEmail));
+                .param(EMPLOYEE_FIRST_NAME_PARAM_NAME, emptyParamValue)
+                .param(EMPLOYEE_LAST_NAME_PARAM_NAME, emptyParamValue)
+                .param(EMPLOYEE_EMAIL_PARAM_NAME, incorrectEmail));
 
         // then :
         result.andExpect(status().is2xxSuccessful())

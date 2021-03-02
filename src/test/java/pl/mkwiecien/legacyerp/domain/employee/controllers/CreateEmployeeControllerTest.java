@@ -38,9 +38,9 @@ class CreateEmployeeControllerTest {
 
         // when :
         ResultActions result = mockMvc.perform(post(NEW_EMPLOYEE_URI)
-                .param(FIRST_NAME_PARAM_NAME, correctEmployee.getFirstName())
-                .param(LAST_NAME_PARAM_NAME, correctEmployee.getLastName())
-                .param(EMAIL_PARAM_NAME, correctEmployee.getEmail()));
+                .param(EMPLOYEE_FIRST_NAME_PARAM_NAME, correctEmployee.getFirstName())
+                .param(EMPLOYEE_LAST_NAME_PARAM_NAME, correctEmployee.getLastName())
+                .param(EMPLOYEE_EMAIL_PARAM_NAME, correctEmployee.getEmail()));
 
         // then :
         result.andExpect(status().is3xxRedirection());
@@ -55,9 +55,9 @@ class CreateEmployeeControllerTest {
 
         // when :
         ResultActions result = mockMvc.perform(post(NEW_EMPLOYEE_URI)
-                .param(FIRST_NAME_PARAM_NAME, emptyParamValue)
-                .param(LAST_NAME_PARAM_NAME, emptyParamValue)
-                .param(EMAIL_PARAM_NAME, incorrectEmail));
+                .param(EMPLOYEE_FIRST_NAME_PARAM_NAME, emptyParamValue)
+                .param(EMPLOYEE_LAST_NAME_PARAM_NAME, emptyParamValue)
+                .param(EMPLOYEE_EMAIL_PARAM_NAME, incorrectEmail));
 
         // then :
         result.andExpect(status().is2xxSuccessful())

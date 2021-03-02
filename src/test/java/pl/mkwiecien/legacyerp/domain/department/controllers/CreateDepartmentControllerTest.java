@@ -22,7 +22,7 @@ import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DE
 class CreateDepartmentControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
     private DepartmentRepository departmentRepository;

@@ -6,10 +6,10 @@ import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import static pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder.builder;
 
 public class EmployeeMotherObject {
-    public static final String ID_PARAM_NAME = "id";
-    public static final String FIRST_NAME_PARAM_NAME = "firstName";
-    public static final String LAST_NAME_PARAM_NAME = "lastName";
-    public static final String EMAIL_PARAM_NAME = "email";
+    public static final String EMPLOYEE_ID_PARAM_NAME = "id";
+    public static final String EMPLOYEE_FIRST_NAME_PARAM_NAME = "firstName";
+    public static final String EMPLOYEE_LAST_NAME_PARAM_NAME = "lastName";
+    public static final String EMPLOYEE_EMAIL_PARAM_NAME = "email";
 
     public static Employee anEmployee() {
         return builder()
