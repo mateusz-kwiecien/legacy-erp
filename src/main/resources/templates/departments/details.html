@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LegacyERP</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="container">
+        <div class="navbar">
+            <a href="/">Main</a>
+            <a href="/employee/list">Employees</a>
+            <a class="active" href="/departments">Departments</a>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Update department : </h2>
+        <form th:action="@{/departments/update/{id}(id=${departmentRequest.id})}" th:object="${departmentRequest}" method="post">
+            <div class="form">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" th:field="*{id}" th:value="${departmentRequest.id}">
+                <label>Name : </label><br>
+                <input type="text" th:field="*{name}">
+                <span th:errors="*{name}" th:errorclass="inputError"></span><br>
+                <label>Manager ID :</label><br>
+                <input type="text" th:field="*{managerId}">
+                <span th:errors="*{managerId}" th:errorclass="inputError"></span><br>
+                <tr th:if="${#arrays.isEmpty(departmentRequest.employees)}">
+                    <td colspan="2"> No Employees in this department </td>
+                </tr>
+                <tr th:each="employee : ${departmentRequest.employees}">
+                    <td><span th:text="${employee.id}"/></td>
+                    <td><span th:text="${employee.firstName}"/></td>
+                    <td><span th:text="${employee.lastName}"/></td>
+                    <td><span th:text="${employee.email}"/></td>
+                    <td><a th:href="@{/employee/details?id={id}(id=${employee.id})}">Update</a></td>
+                    <td>
+                        <form th:action="@{/departments/employees/{id}(id=${employee.id})}" th:method="delete">
+                            <input type="submit" value="Remove"/>
+                        </form>
+                    </td>
+                </tr>
+                <input type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

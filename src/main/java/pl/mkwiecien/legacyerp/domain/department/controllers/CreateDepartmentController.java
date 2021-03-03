@@ -30,6 +30,9 @@ public class CreateDepartmentController {
 
     @PostMapping
     public String create(@ModelAttribute @Validated DepartmentRequest departmentRequest, Errors errors) {
+        if (errors.hasErrors()) {
+            return "departments/create";
+        }
         service.create(departmentRequest);
         return "redirect:/departments";
     }
