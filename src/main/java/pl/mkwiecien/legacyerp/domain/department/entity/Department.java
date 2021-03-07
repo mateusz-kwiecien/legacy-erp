@@ -3,7 +3,6 @@ package pl.mkwiecien.legacyerp.domain.department.entity;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,6 @@ public class Department {
     @Column(name = "DEPARTMENT_ID")
     private Long id;
 
-    @NotNull
     @Column(name = "NAME", nullable = false)
     private String name;
 

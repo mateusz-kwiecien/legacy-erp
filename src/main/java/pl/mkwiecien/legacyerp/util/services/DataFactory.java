@@ -7,7 +7,7 @@ import java.util.*;
 
 @Component
 public class DataFactory {
-    private static final String EMAIL_SUFIX = "@example.com";
+    private static final String EMAIL_SUFFIX = "@example.com";
     private static final List<String> MALE_FIRST_NAMES = Arrays.asList("James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph",
             "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Donald", "Mark", "Paul", "Steven", "Andrew", "Kenneth");
     private static final List<String> FEMALE_FIRST_NAMES = Arrays.asList("Donna", "Emily", "Kimberly", "Dorothy", "Ashley", "Sandra", "Betty", "Margaret",
@@ -27,10 +27,16 @@ public class DataFactory {
     private EmployeeRequest newRandomRequest() {
         Gender gender = new Random().nextBoolean() ? Gender.MALE : Gender.FEMALE;
         List<String> firstNames = gender.equals(Gender.MALE) ? MALE_FIRST_NAMES : FEMALE_FIRST_NAMES;
+
         String firstName = pickRandomElementFrom(firstNames);
         String lastName = pickRandomElementFrom(LAST_NAMES);
-        String email = firstName.toLowerCase().concat(".").concat(lastName.toLowerCase()).concat(EMAIL_SUFIX);
-        return new EmployeeRequest(firstName, lastName, email);
+        String email = firstName.toLowerCase().concat(".").concat(lastName.toLowerCase()).concat(EMAIL_SUFFIX);
+
+        return EmployeeRequest.Builder.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .build();
     }
 
     private String pickRandomElementFrom(List<String> givenList) {

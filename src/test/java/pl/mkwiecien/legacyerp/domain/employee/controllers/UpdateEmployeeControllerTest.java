@@ -1,5 +1,7 @@
 package pl.mkwiecien.legacyerp.domain.employee.controllers;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -7,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.mkwiecien.legacyerp.application.ApplicationTestConfiguration;
+import pl.mkwiecien.legacyerp.domain.department.entity.Department;
+import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
@@ -17,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.aDepartmentWith;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.*;
 
 @AutoConfigureMockMvc
@@ -25,17 +30,23 @@ class UpdateEmployeeControllerTest {
 
     private static final String EMPLOYEE_UPDATE_URI = "/employee/update/";
     private static final String EMPLOYEE_DETAILS_URI = "/employee/details?id=";
+    private static final String DEPARTMENT_NAME = "departmentName";
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @Test
     void shouldRetrieveEmployeeModel() throws Exception {
         // given :
         Employee employee = employeeRepository.save(anEmployee());
+        Department department = departmentRepository.save(aDepartmentWith(DEPARTMENT_NAME, employee.getId()));
+        employeeRepository.save(Employee.Builder.builder().from(employee).department(department).build());
         String employeeDetailsUri = EMPLOYEE_DETAILS_URI + employee.getId();
 
         // when :
@@ -43,10 +54,12 @@ class UpdateEmployeeControllerTest {
 
         // then :
         result.andExpect(status().is2xxSuccessful())
-                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_ID_PARAM_NAME, is(employee.getId()))))
-                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_FIRST_NAME_PARAM_NAME, is(employee.getFirstName()))))
-                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_LAST_NAME_PARAM_NAME, is(employee.getLastName()))))
-                .andExpect(model().attribute("employeeRequest", hasProperty(EMPLOYEE_EMAIL_PARAM_NAME, is(employee.getEmail()))));
+                .andExpect(model().attribute(EMPLOYEE_REQUEST_PARAM_NAME, hasProperty(EMPLOYEE_ID_PARAM_NAME, is(employee.getId()))))
+                .andExpect(model().attribute(EMPLOYEE_REQUEST_PARAM_NAME, hasProperty(EMPLOYEE_FIRST_NAME_PARAM_NAME, is(employee.getFirstName()))))
+                .andExpect(model().attribute(EMPLOYEE_REQUEST_PARAM_NAME, hasProperty(EMPLOYEE_LAST_NAME_PARAM_NAME, is(employee.getLastName()))))
+                .andExpect(model().attribute(EMPLOYEE_REQUEST_PARAM_NAME, hasProperty(EMPLOYEE_EMAIL_PARAM_NAME, is(employee.getEmail()))))
+                .andExpect(model().attribute(EMPLOYEE_REQUEST_PARAM_NAME, hasProperty(EMPLOYEE_DEPARTMENT_PARAM_NAME,
+                        hasProperty(EMPLOYEE_DEPARTMENT_NAME_PARAM_NAME, is(department.getName())))));
     }
 
     @Test
@@ -88,10 +101,21 @@ class UpdateEmployeeControllerTest {
 
         // then :
         result.andExpect(status().is2xxSuccessful())
-                .andExpect(model().attributeErrorCount("employeeRequest", 3));
+                .andExpect(model().attributeErrorCount(EMPLOYEE_REQUEST_PARAM_NAME, 3));
         Employee givenEmployee = employeeRepository.findById(existingEmployee.getId()).get();
         assertEquals(givenEmployee.getFirstName(), existingEmployee.getFirstName());
         assertEquals(givenEmployee.getLastName(), existingEmployee.getLastName());
         assertEquals(givenEmployee.getEmail(), existingEmployee.getEmail());
+    }
+
+    @BeforeEach
+    void setup() {
+        cleanup();
+    }
+
+    @AfterEach
+    void cleanup() {
+        employeeRepository.deleteAll();
+        departmentRepository.deleteAll();
     }
 }

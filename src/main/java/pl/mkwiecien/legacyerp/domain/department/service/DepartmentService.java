@@ -5,6 +5,7 @@ import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentRequest;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentDAO;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
+import pl.mkwiecien.legacyerp.domain.employee.service.EmployeeService;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,9 +20,12 @@ public class DepartmentService {
 
     private final DepartmentDAO departmentDAO;
 
-    public DepartmentService(DepartmentRepository repository, DepartmentDAO departmentDAO) {
+    private final EmployeeService employeeService;
+
+    public DepartmentService(DepartmentRepository repository, DepartmentDAO departmentDAO, EmployeeService employeeService) {
         this.repository = repository;
         this.departmentDAO = departmentDAO;
+        this.employeeService = employeeService;
     }
 
     public Optional<Department> findById(Long departmentId) {
@@ -38,6 +42,10 @@ public class DepartmentService {
 
     public void delete(Long id) {
         departmentDAO.deleteDepartmentById(id);
+    }
+
+    public void detachEmployee(Long employeeId) {
+        employeeService.detachEmployee(employeeId);
     }
 
     private Department from(DepartmentRequest request) {
