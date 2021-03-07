@@ -29,21 +29,32 @@
                 <label>Manager ID :</label><br>
                 <input type="text" th:field="*{managerId}">
                 <span th:errors="*{managerId}" th:errorclass="inputError"></span><br>
-                <tr th:if="${#arrays.isEmpty(departmentRequest.employees)}">
-                    <td colspan="2"> No Employees in this department </td>
-                </tr>
-                <tr th:each="employee : ${departmentRequest.employees}">
-                    <td><span th:text="${employee.id}"/></td>
-                    <td><span th:text="${employee.firstName}"/></td>
-                    <td><span th:text="${employee.lastName}"/></td>
-                    <td><span th:text="${employee.email}"/></td>
-                    <td><a th:href="@{/employee/details?id={id}(id=${employee.id})}">Update</a></td>
-                    <td>
-                        <form th:action="@{/departments/employees/{id}(id=${employee.id})}" th:method="delete">
-                            <input type="submit" value="Remove"/>
-                        </form>
-                    </td>
-                </tr>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#arrays.isEmpty(departmentRequest.employees)}">
+                        <td colspan="2"> No Employees in this department </td>
+                    </tr>
+                    <tr th:each="employee : ${departmentRequest.employees}">
+                        <td><span th:text="${employee.firstName}"/></td>
+                        <td><span th:text="${employee.lastName}"/></td>
+                        <td><span th:text="${employee.email}"/></td>
+                        <td>
+                            <form th:action="@{/employee/detach/{id}(id=${employee.id})}" method="post">
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="text" name="departmentId" value=th:value="${departmentRequest.id}">
+                                <input type="submit" value="Remove"/>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
                 <input type="submit" value="Save" />
             </div>
         </form>

@@ -24,17 +24,12 @@ public class EmployeeRequest {
     public EmployeeRequest() {
     }
 
-    public EmployeeRequest(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
-    public EmployeeRequest(Long id, String firstName, String lastName, String email) {
+    private EmployeeRequest(Long id, String firstName, String lastName, String email, Department department) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.department = department;
     }
 
     public String getFirstName() {
@@ -78,18 +73,56 @@ public class EmployeeRequest {
     }
 
     public static EmployeeRequest from(Employee employee) {
-        return new EmployeeRequest(employee.getId(), employee.getFirstName(), employee.getLastName(),
-                employee.getEmail());
+        return Builder.builder()
+                .id(employee.getId())
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
+                .email(employee.getEmail())
+                .department(employee.getDepartment())
+                .build();
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeRequest{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", department=" + department +
-                '}';
+    public static final class Builder {
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Department department;
+
+        private Builder() {
+        }
+
+        public static Builder builder() {
+            return new Builder();
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder department(Department department) {
+            this.department = department;
+            return this;
+        }
+
+        public EmployeeRequest build() {
+            return new EmployeeRequest(id, firstName, lastName, email, department);
+        }
     }
 }

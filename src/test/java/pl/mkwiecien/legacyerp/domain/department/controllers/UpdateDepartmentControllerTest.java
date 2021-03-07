@@ -85,5 +85,4 @@ class UpdateDepartmentControllerTest {
         employeeRepository.deleteAll();
         departmentRepository.deleteAll();
     }
-
 }

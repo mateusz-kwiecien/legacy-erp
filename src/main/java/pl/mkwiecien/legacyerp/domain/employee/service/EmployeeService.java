@@ -46,6 +46,12 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
         return employeeRepository.findAllByDepartmentId(departmentId);
     }
 
+    public void detachEmployee(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(IllegalArgumentException::new);
+        employee.setDepartment(null);
+        employeeRepository.save(employee);
+    }
+
     public Employee update(Long employeeId, EmployeeRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);
