@@ -19,6 +19,10 @@ public class DepartmentMotherObject {
         return aDepartmentWith(DEFAULT_DEPARTMENT_NAME, DEFAULT_DEPARTMENT_MANAGER_ID);
     }
 
+    public static Department aDepartmentWithOnlyName(String name) {
+        return aDepartmentWith(name, null);
+    }
+
     public static Department aDepartmentWith(Long managerId) {
         return aDepartmentWith(DEFAULT_DEPARTMENT_NAME, managerId);
     }

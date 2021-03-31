@@ -1,11 +1,12 @@
 package pl.mkwiecien.legacyerp.domain.department.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.mkwiecien.legacyerp.domain.department.service.DepartmentService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/departments")
@@ -17,10 +18,12 @@ public class DetachEmployeeController {
         this.departmentService = departmentService;
     }
 
-    @PutMapping("/detach/{employeeId}")
-    public String detachEmployeeFromDepartment(Model model, @PathVariable Long employeeId) {
+    @PutMapping("{departmentId}/detach/{employeeId}")
+    public String detachEmployeeFromDepartment(@PathVariable String departmentId, @PathVariable Long employeeId, HttpServletRequest request) {
         departmentService.detachEmployee(employeeId);
-        String id = (String) model.getAttribute("departmentId");
-        return "redirect:departments/details/" + id;
+        String referer = request.getHeader("Referer");
+        return  referer != null
+                ? "redirect:" + referer
+                : "redirect:/departments/" + departmentId + "/details";
     }
 }

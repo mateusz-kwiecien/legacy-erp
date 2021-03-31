@@ -33,7 +33,7 @@
                 <input type="text" th:field="*{email}">
                 <span th:errors="*{email}" th:errorclass="inputError"></span><br>
                 <label>Department Name :</label><br>
-                <span th:text="*{department.name}"/>
+                <input type="text" th:field="*{departmentName}"><br>
                 <input type="submit" value="Save" />
             </div>
         </form>

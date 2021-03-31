@@ -4,6 +4,7 @@ import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 public class EmployeeRequest {
 
@@ -19,17 +20,17 @@ public class EmployeeRequest {
     @Email(message = "Valid email is required")
     private String email;
 
-    private Department department;
+    private String departmentName;
 
     public EmployeeRequest() {
     }
 
-    private EmployeeRequest(Long id, String firstName, String lastName, String email, Department department) {
+    private EmployeeRequest(Long id, String firstName, String lastName, String email, String departmentName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.department = department;
+        this.departmentName = departmentName;
     }
 
     public String getFirstName() {
@@ -64,21 +65,26 @@ public class EmployeeRequest {
         this.id = id;
     }
 
-    public Department getDepartment() {
-        return department;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public static EmployeeRequest from(Employee employee) {
+
+        String departmentName = employee.getDepartment() != null
+                ? employee.getDepartment().getName()
+                : null;
+
         return Builder.builder()
                 .id(employee.getId())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
                 .email(employee.getEmail())
-                .department(employee.getDepartment())
+                .departmentName(departmentName)
                 .build();
     }
 
@@ -87,7 +93,7 @@ public class EmployeeRequest {
         private String firstName;
         private String lastName;
         private String email;
-        private Department department;
+        private String departmentName;
 
         private Builder() {
         }
@@ -116,13 +122,13 @@ public class EmployeeRequest {
             return this;
         }
 
-        public Builder department(Department department) {
-            this.department = department;
+        public Builder departmentName(String departmentName) {
+            this.departmentName = departmentName;
             return this;
         }
 
         public EmployeeRequest build() {
-            return new EmployeeRequest(id, firstName, lastName, email, department);
+            return new EmployeeRequest(id, firstName, lastName, email, departmentName);
         }
     }
 }
