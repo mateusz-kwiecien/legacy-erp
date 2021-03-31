@@ -29,35 +29,39 @@
                 <label>Manager ID :</label><br>
                 <input type="text" th:field="*{managerId}">
                 <span th:errors="*{managerId}" th:errorclass="inputError"></span><br>
+                <input type="submit" value="Save" />
+            </div>
+        </form>
+
+
                 <table>
                     <thead>
-                    <tr>
+                    <tr th:if="${not #arrays.isEmpty(departmentRequest.employees)}">
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
                     </tr>
+                    <tr th:if="${#arrays.isEmpty(departmentRequest.employees)}">
+                        <td colspan="2"><b> No Employees in this department </b></td>
+                    </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${#arrays.isEmpty(departmentRequest.employees)}">
-                        <td colspan="2"> No Employees in this department </td>
-                    </tr>
                     <tr th:each="employee : ${departmentRequest.employees}">
                         <td><span th:text="${employee.firstName}"/></td>
                         <td><span th:text="${employee.lastName}"/></td>
                         <td><span th:text="${employee.email}"/></td>
                         <td>
-                            <form th:action="@{/employee/detach/{id}(id=${employee.id})}" method="post">
+                            <form th:action="@{/departments/{departmentId}/detach/{employeeId}
+                                            (departmentId=${departmentRequest.id},employeeId=${employee.id})}"
+                                  th:object="${departmentRequest}" method="post">
                                 <input type="hidden" name="_method" value="PUT">
-                                <input type="text" name="departmentId" value=th:value="${departmentRequest.id}">
                                 <input type="submit" value="Remove"/>
                             </form>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                <input type="submit" value="Save" />
-            </div>
-        </form>
+
     </div>
 </div>
 

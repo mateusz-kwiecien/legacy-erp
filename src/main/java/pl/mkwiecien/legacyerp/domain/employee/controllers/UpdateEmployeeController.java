@@ -29,9 +29,6 @@ public class UpdateEmployeeController {
     @PutMapping("/update/{employeeId}")
     public String updateGivenEmployee(@ModelAttribute @Validated EmployeeRequest employeeRequest, Errors errors,
                                       @PathVariable Long employeeId) {
-        if (employeeRequest.getDepartment() == null) {
-            employeeRequest.setDepartment(new Department());
-        }
         if (errors.hasErrors()) {
             return "employee/details";
         }
@@ -46,9 +43,6 @@ public class UpdateEmployeeController {
         Employee employee = employeeService.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);
         EmployeeRequest employeeRequest = EmployeeRequest.from(employee);
-        if (employeeRequest.getDepartment() == null) {
-            employeeRequest.setDepartment(new Department());
-        }
         return employeeRequest;
     }
 }

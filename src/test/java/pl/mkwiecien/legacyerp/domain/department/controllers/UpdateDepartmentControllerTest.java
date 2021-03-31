@@ -29,7 +29,7 @@ import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class UpdateDepartmentControllerTest {
 
-    private static final String DEPARTMENT_URI_PREFIX = "/departments/details?id=";
+    private static final String DEPARTMENT_URI_PREFIX = "/departments/";
     private static final String DEPARTMENT_NAME = "departmentName";
 
     @Autowired
@@ -55,7 +55,7 @@ class UpdateDepartmentControllerTest {
         Employee secondDepartmentEmployee = Employee.Builder.builder().from(employees.get(2)).department(aDepartment).build();
         aDepartment.setEmployees(Set.of(firstDepartmentEmployee, secondDepartmentEmployee));
         departmentRepository.save(aDepartment);
-        String departmentUri = DEPARTMENT_URI_PREFIX + aDepartment.getId();
+        String departmentUri = DEPARTMENT_URI_PREFIX  + aDepartment.getId() + "/details";
 
         // when :
         ResultActions result = mockMvc.perform(get(departmentUri));

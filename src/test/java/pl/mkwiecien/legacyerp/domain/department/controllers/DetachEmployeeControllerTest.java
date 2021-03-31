@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEPARTMENTS_URI;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
@@ -45,7 +46,7 @@ class DetachEmployeeControllerTest {
         Department department = departmentRepository.save(DepartmentMotherObject.aDepartment());
         employee.setDepartment(department);
         employeeRepository.save(employee);
-        String detachEmployeeUri = DepartmentMotherObject.DEPARTMENTS_URI + "/detach/" + employee.getId();
+        String detachEmployeeUri = DEPARTMENTS_URI + "/" + department.getId() + "/detach/" + employee.getId();
 
         // when :
         ResultActions result = mockMvc.perform(put(detachEmployeeUri));

@@ -1,6 +1,8 @@
 package pl.mkwiecien.legacyerp.domain.employee.service;
 
 import org.springframework.stereotype.Service;
+import pl.mkwiecien.legacyerp.domain.department.entity.Department;
+import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
@@ -17,8 +19,11 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
 
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    private final FindDepartmentPort findDepartmentPort;
+
+    public EmployeeService(EmployeeRepository employeeRepository, FindDepartmentPort findDepartmentPort) {
         this.employeeRepository = employeeRepository;
+        this.findDepartmentPort = findDepartmentPort;
     }
 
     @Override
@@ -46,12 +51,6 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
         return employeeRepository.findAllByDepartmentId(departmentId);
     }
 
-    public void detachEmployee(Long employeeId) {
-        Employee employee = employeeRepository.findById(employeeId).orElseThrow(IllegalArgumentException::new);
-        employee.setDepartment(null);
-        employeeRepository.save(employee);
-    }
-
     public Employee update(Long employeeId, EmployeeRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);
@@ -67,7 +66,7 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .department(request.getDepartment())
+                .department(retrieveFrom(request))
                 .build();
     }
 
@@ -81,6 +80,13 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
         employee.setFirstName(request.getFirstName());
         employee.setLastName(request.getLastName());
         employee.setEmail(request.getEmail());
+        employee.setDepartment(retrieveFrom(request));
         return employee;
+    }
+
+    private Department retrieveFrom(EmployeeRequest request) {
+        return request.getDepartmentName() != null
+                ? findDepartmentPort.retrieveByName(request.getDepartmentName())
+                : null;
     }
 }
