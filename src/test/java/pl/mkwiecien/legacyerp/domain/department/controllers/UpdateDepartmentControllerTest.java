@@ -28,7 +28,6 @@ import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class UpdateDepartmentControllerTest {
-
     private static final String DEPARTMENT_URI_PREFIX = "/departments/";
     private static final String DEPARTMENT_NAME = "departmentName";
 

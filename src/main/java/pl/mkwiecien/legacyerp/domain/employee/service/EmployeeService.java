@@ -1,5 +1,6 @@
 package pl.mkwiecien.legacyerp.domain.employee.service;
 
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
@@ -85,8 +86,8 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
     }
 
     private Department retrieveFrom(EmployeeRequest request) {
-        return request.getDepartmentName() != null
-                ? findDepartmentPort.retrieveByName(request.getDepartmentName())
-                : null;
+        return (request.getDepartmentName() == null || request.getDepartmentName().isEmpty())
+                ? null
+                : findDepartmentPort.retrieveByName(request.getDepartmentName());
     }
 }

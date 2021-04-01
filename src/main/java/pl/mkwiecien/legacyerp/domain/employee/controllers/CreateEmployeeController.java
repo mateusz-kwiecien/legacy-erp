@@ -12,7 +12,7 @@ import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
 import pl.mkwiecien.legacyerp.domain.employee.service.EmployeeService;
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 public class CreateEmployeeController {
 
     private EmployeeService employeeService;
@@ -25,15 +25,15 @@ public class CreateEmployeeController {
     public String getNewEmployeeForm(Model model) {
         EmployeeRequest employeeRequest = new EmployeeRequest();
         model.addAttribute(employeeRequest);
-        return "employee/create";
+        return "employees/create";
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public String createNewEmployee(@ModelAttribute @Validated EmployeeRequest employeeRequest, Errors errors) {
         if (errors.hasErrors()) {
-            return "employee/create";
+            return "employees/create";
         }
         employeeService.create(employeeRequest);
-        return "redirect:/employee/list";
+        return "redirect:/employees";
     }
 }

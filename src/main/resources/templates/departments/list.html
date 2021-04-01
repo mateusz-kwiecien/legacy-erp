@@ -12,7 +12,7 @@
 <div class="container">
     <div class="navbar">
         <a href="/">Main</a>
-        <a href="/employee/list">Employees</a>
+        <a href="/employees">Employees</a>
         <a class="active" href="/departments">Departments</a>
     </div>
     <div class="content">
@@ -21,14 +21,14 @@
         <table>
             <thead>
             <tr>
-                <th> ID </th>
-                <th> Manager ID </th>
-                <th> Name </th>
+                <th> ID</th>
+                <th> Manager ID</th>
+                <th> Name</th>
             </tr>
             </thead>
             <tbody>
             <tr th:if="${#arrays.isEmpty(departments)}">
-                <td colspan="2"> No Departments Available </td>
+                <td colspan="2"> No Departments Available</td>
             </tr>
             <tr th:each="department : ${departments}">
                 <td><span th:text="${department.id}"/></td>

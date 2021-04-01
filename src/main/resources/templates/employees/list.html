@@ -12,25 +12,25 @@
 <div class="container">
     <div class="navbar">
         <a href="/">Main</a>
-        <a class="active" href="/employee/list">Employees</a>
+        <a class="active" href="/employees">Employees</a>
         <a href="/departments">Departments</a>
     </div>
     <div class="content">
         <h2>Employees list</h2>
-        <a href="/employee/create">Create new</a>
+        <a href="/employees/create">Create new</a>
         <table>
             <thead>
             <tr>
-                <th> ID </th>
-                <th> First Name </th>
-                <th> Last Name </th>
-                <th> Email </th>
-                <th> Department </th>
+                <th> ID</th>
+                <th> First Name</th>
+                <th> Last Name</th>
+                <th> Email</th>
+                <th> Department</th>
             </tr>
             </thead>
             <tbody>
             <tr th:if="${#arrays.isEmpty(employees)}">
-                <td colspan="2"> No Employees Available </td>
+                <td colspan="2"> No Employees Available</td>
             </tr>
             <tr th:each="employee : ${employees}">
                 <td><span th:text="${employee.id}"/></td>
@@ -38,9 +38,9 @@
                 <td><span th:text="${employee.lastName}"/></td>
                 <td><span th:text="${employee.email}"/></td>
                 <td><span th:text="${employee.department.name}"/></td>
-                <td><a th:href="@{/employee/details?id={id}(id=${employee.id})}">Update</a></td>
+                <td><a th:href="@{/employees/details?id={id}(id=${employee.id})}">Update</a></td>
                 <td>
-                    <form th:action="@{/employee/delete/{id}(id=${employee.id})}" th:method="delete">
+                    <form th:action="@{/employees/{id}(id=${employee.id})}" th:method="delete">
                         <input type="submit" value="DELETE"/>
                     </form>
                 </td>

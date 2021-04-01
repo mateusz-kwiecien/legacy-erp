@@ -28,8 +28,7 @@ import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.*;
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class UpdateEmployeeControllerTest {
-    private static final String EMPLOYEE_UPDATE_URI = "/employee/update/";
-    private static final String EMPLOYEE_DETAILS_URI = "/employee/details?id=";
+    private static final String EMPLOYEE_DETAILS_URI = "/employees/details?id=";
     private static final String DEPARTMENT_NAME = "department-01";
     private static final String EMPLOYEE_UPDATED_FIRST_NAME = "updatedFirstName";
     private static final String EMPLOYEE_UPDATED_LAST_NAME = "updatedLastName";
@@ -68,7 +67,7 @@ class UpdateEmployeeControllerTest {
     void shouldUpdateGivenEmployee() throws Exception {
         // given :
         Employee employee = employeeRepository.save(anEmployee());
-        String employeeUpdateUri = EMPLOYEE_UPDATE_URI + employee.getId();
+        String employeeUpdateUri = EMPLOYEES_URI + "/" + employee.getId();
         Department department = departmentRepository.save(aDepartmentWithOnlyName(DEPARTMENT_NAME));
 
         // when :
@@ -93,7 +92,7 @@ class UpdateEmployeeControllerTest {
     void shouldReturnErrorsAndCreateViewWhenRequestIsIncorrect() throws Exception {
         // given :
         Employee existingEmployee = employeeRepository.save(anEmployee());
-        String employeeUpdateUri = EMPLOYEE_UPDATE_URI + existingEmployee.getId();
+        String employeeUpdateUri = EMPLOYEES_URI + "/" + existingEmployee.getId();
         String incorrectEmail = "incorrectEmail";
         String emptyParamValue = "";
 

@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EMPLOYEES_URI;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployeeWith;
 
 @AutoConfigureMockMvc
@@ -29,7 +30,6 @@ class EmployeeListControllerTest {
     private static final String SECOND_EMPLOYEE_FIRST_NAME = "Jason";
     private static final String SECOND_EMPLOYEE_LAST_NAME = "Unit";
     private static final String SECOND_EMPLOYEE_EMAIL = "jason.unit@example.com";
-    private static final String EMPLOYEE_LIST_URI = "/employee/list";
 
     @Autowired
     MockMvc mockMvc;
@@ -43,7 +43,7 @@ class EmployeeListControllerTest {
         employeeRepository.saveAll(anEmployeesList());
 
         // when :
-        ResultActions result = mockMvc.perform(get(EMPLOYEE_LIST_URI));
+        ResultActions result = mockMvc.perform(get(EMPLOYEES_URI));
 
         // then :
         result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())

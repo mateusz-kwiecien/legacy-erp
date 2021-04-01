@@ -15,13 +15,12 @@ import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EMPLOYEES_URI;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployee;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class DeleteEmployeeControllerTest {
-
-    private static final String DELETE_EMPLOYEE_URI = "/employee/delete/";
 
     @Autowired
     MockMvc mockMvc;
@@ -36,7 +35,7 @@ class DeleteEmployeeControllerTest {
         Long id = employeeRepository.save(employee).getId();
 
         // when :
-        String deleteUri = DELETE_EMPLOYEE_URI + id;
+        String deleteUri = EMPLOYEES_URI + "/" + id;
         ResultActions result = mockMvc.perform(delete(deleteUri));
 
         // then :

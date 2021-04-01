@@ -23,8 +23,6 @@ import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.*;
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class CreateEmployeeControllerTest {
 
-    private static final String NEW_EMPLOYEE_URI = "/employee/new";
-
     @Autowired
     MockMvc mockMvc;
 
@@ -37,7 +35,7 @@ class CreateEmployeeControllerTest {
         Employee correctEmployee = EmployeeMotherObject.anEmployee();
 
         // when :
-        ResultActions result = mockMvc.perform(post(NEW_EMPLOYEE_URI)
+        ResultActions result = mockMvc.perform(post(EMPLOYEES_URI)
                 .param(EMPLOYEE_FIRST_NAME_PARAM_NAME, correctEmployee.getFirstName())
                 .param(EMPLOYEE_LAST_NAME_PARAM_NAME, correctEmployee.getLastName())
                 .param(EMPLOYEE_EMAIL_PARAM_NAME, correctEmployee.getEmail()));
@@ -54,7 +52,7 @@ class CreateEmployeeControllerTest {
         String emptyParamValue = "";
 
         // when :
-        ResultActions result = mockMvc.perform(post(NEW_EMPLOYEE_URI)
+        ResultActions result = mockMvc.perform(post(EMPLOYEES_URI)
                 .param(EMPLOYEE_FIRST_NAME_PARAM_NAME, emptyParamValue)
                 .param(EMPLOYEE_LAST_NAME_PARAM_NAME, emptyParamValue)
                 .param(EMPLOYEE_EMAIL_PARAM_NAME, incorrectEmail));

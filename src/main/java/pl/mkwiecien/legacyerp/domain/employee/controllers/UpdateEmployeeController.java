@@ -5,13 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
 import pl.mkwiecien.legacyerp.domain.employee.service.EmployeeService;
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 public class UpdateEmployeeController {
 
     private EmployeeService employeeService;
@@ -23,17 +22,17 @@ public class UpdateEmployeeController {
     @GetMapping("/details")
     public String retrieveEmployeesDetails(Model model, @RequestParam(value = "id", required = false) Long employeeId) {
         model.addAttribute("employeeRequest", retrieveFrom(employeeId));
-        return "employee/details";
+        return "employees/details";
     }
 
-    @PutMapping("/update/{employeeId}")
+    @PutMapping("/{employeeId}")
     public String updateGivenEmployee(@ModelAttribute @Validated EmployeeRequest employeeRequest, Errors errors,
                                       @PathVariable Long employeeId) {
         if (errors.hasErrors()) {
-            return "employee/details";
+            return "employees/details";
         }
         employeeService.update(employeeId, employeeRequest);
-        return "redirect:/employee/list";
+        return "redirect:/employees";
     }
 
     private EmployeeRequest retrieveFrom(Long employeeId) {
