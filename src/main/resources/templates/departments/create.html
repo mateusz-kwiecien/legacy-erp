@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>LegacyERP</title>
-    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -13,7 +13,7 @@
     <div class="container">
         <div class="navbar">
             <a href="/">Main</a>
-            <a href="/employee/list">Employees</a>
+            <a href="/employees">Employees</a>
             <a class="active" href="/departments">Departments</a>
         </div>
     </div>
@@ -21,13 +21,13 @@
         <h2>Create new department : </h2>
         <form th:action="@{/departments}" th:object="${departmentRequest}" method="post">
             <div class="form">
-                    <label>Manager ID : </label><br>
-                    <input type="text" th:field="*{managerId}">
-                    <span th:errors="*{managerId}" th:errorclass="inputError"></span><br>
-                    <label>Department Name : </label><br>
-                    <input type="text" th:field="*{name}">
-                    <span th:errors="*{name}" th:errorclass="inputError"></span><br>
-                    <input type="submit" value="Save" />
+                <label>Manager ID : </label><br>
+                <input type="text" th:field="*{managerId}">
+                <span th:errors="*{managerId}" th:errorclass="inputError"></span><br>
+                <label>Department Name : </label><br>
+                <input type="text" th:field="*{name}">
+                <span th:errors="*{name}" th:errorclass="inputError"></span><br>
+                <input type="submit" value="Save"/>
             </div>
         </form>
     </div>

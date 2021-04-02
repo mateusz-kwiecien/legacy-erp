@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>LegacyERP</title>
-    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -13,14 +13,14 @@
     <div class="container">
         <div class="navbar">
             <a class="active" href="/">Main</a>
-            <a href="/employee/list">Employees</a>
+            <a href="/employees">Employees</a>
             <a href="/departments">Departments</a>
         </div>
     </div>
     <div class="content">
         <h2>Main page</h2>
         <form th:action="@{/util/populate/employees}" method="post">
-            <input type="submit" value="Populate" />
+            <input type="submit" value="Populate"/>
         </form>
     </div>
 </div>

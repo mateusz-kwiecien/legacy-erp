@@ -11,7 +11,7 @@ import pl.mkwiecien.legacyerp.domain.employee.service.EmployeeService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 public class EmployeeListController {
 
     private EmployeeService employeeService;
@@ -20,13 +20,13 @@ public class EmployeeListController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public String retrieveAll(Model model) {
         List<Employee> employees = employeeService.findAll();
         employees.stream()
                 .filter(employee -> employee.getDepartment() == null)
                 .forEach(employee -> employee.setDepartment(new Department()));
         model.addAttribute("employees", employees);
-        return "employee/list";
+        return "employees/list";
     }
 }
