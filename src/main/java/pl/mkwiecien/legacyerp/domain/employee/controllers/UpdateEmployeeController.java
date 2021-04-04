@@ -25,7 +25,7 @@ public class UpdateEmployeeController {
         return "employees/details";
     }
 
-    @PutMapping("/{employeeId}")
+    @PutMapping("{employeeId}")
     public String updateGivenEmployee(@ModelAttribute @Validated EmployeeRequest employeeRequest, Errors errors,
                                       @PathVariable Long employeeId) {
         if (errors.hasErrors()) {

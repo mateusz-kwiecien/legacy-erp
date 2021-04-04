@@ -84,6 +84,10 @@ public class Employee {
         this.department = department;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

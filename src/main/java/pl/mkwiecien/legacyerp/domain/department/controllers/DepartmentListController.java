@@ -4,25 +4,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.mkwiecien.legacyerp.domain.department.entity.Department;
-import pl.mkwiecien.legacyerp.domain.department.service.DepartmentService;
-
-import java.util.List;
+import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 
 @Controller
 @RequestMapping("/departments")
 public class DepartmentListController {
 
-    private final DepartmentService service;
+    private final FindDepartmentPort findDepartmentPort;
 
-    public DepartmentListController(DepartmentService service) {
-        this.service = service;
+    public DepartmentListController(FindDepartmentPort findDepartmentPort) {
+        this.findDepartmentPort = findDepartmentPort;
     }
 
     @GetMapping
     public String retrieveAll(Model model) {
-        List<Department> departments = service.retrieveAll();
-        model.addAttribute("departments", departments);
+        model.addAttribute("departments", findDepartmentPort.retrieveAllViews());
         return "departments/list";
     }
 }

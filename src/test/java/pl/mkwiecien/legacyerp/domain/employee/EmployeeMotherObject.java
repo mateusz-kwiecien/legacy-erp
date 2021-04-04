@@ -27,6 +27,14 @@ public class EmployeeMotherObject {
         return anEmployeeWith(null, firstName, lastName, email, null);
     }
 
+    public static Employee anEmployeeWith(Long id, String firstName, String lastName, String email) {
+        return anEmployeeWith(id, firstName, lastName, email, null);
+    }
+
+    public static Employee anEmployeeWith(String firstName, String lastName, String email, Department department) {
+        return anEmployeeWith(null, firstName, lastName, email, department);
+    }
+
     public static Employee anEmployeeWith(Long id, String firstName, String lastName, String email, Department department) {
         return builder()
                 .id(id)
