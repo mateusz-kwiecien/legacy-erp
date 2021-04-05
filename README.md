@@ -17,7 +17,6 @@ used mostly legacy technologies like Spring MVC
 
 #### TODO :
 
-* Fix deleting employees assigned to department
 * Add and configure JaCoCo plugin
 * Update department creating view (assign manager by list, not id input)
 * Add department info to employee view  
@@ -36,3 +35,4 @@ used mostly legacy technologies like Spring MVC
 * ~~Add department assignment option for employee update operation~~
 * ~~Add update and delete department controllers~~
 * ~~Create department view, with number of employees~~
+* ~~Fix deleting employees assigned to department~~
