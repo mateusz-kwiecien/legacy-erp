@@ -20,7 +20,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
@@ -28,8 +30,9 @@ import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
 class UpdateDepartmentControllerTest {
-    private static final String DEPARTMENT_URI_PREFIX = "/departments/";
     private static final String DEPARTMENT_NAME = "departmentName";
+    private static final String NEW_DEPARTMENT_NAME = "newDepartmentName";
+    private static final String NEW_DEPARTMENT_MANAGER_ID = "7";
 
     @Autowired
     private MockMvc mockMvc;
@@ -54,7 +57,7 @@ class UpdateDepartmentControllerTest {
         Employee secondDepartmentEmployee = Employee.Builder.builder().from(employees.get(2)).department(aDepartment).build();
         aDepartment.setEmployees(Set.of(firstDepartmentEmployee, secondDepartmentEmployee));
         departmentRepository.save(aDepartment);
-        String departmentUri = DEPARTMENT_URI_PREFIX  + aDepartment.getId() + "/details";
+        String departmentUri = DEPARTMENTS_URI + "/" + aDepartment.getId() + "/details";
 
         // when :
         ResultActions result = mockMvc.perform(get(departmentUri));
@@ -66,6 +69,25 @@ class UpdateDepartmentControllerTest {
                 .andExpect(model().attribute("departmentRequest", hasProperty(DEPARTMENT_MANAGER_ID_PARAM_NAME, is(aDepartment.getManagerId()))))
                 .andExpect(model().attribute("departmentRequest", hasProperty(DEPARTMENT_EMPLOYEES_PARAM_NAME, hasItem(firstDepartmentEmployee))))
                 .andExpect(model().attribute("departmentRequest", hasProperty(DEPARTMENT_EMPLOYEES_PARAM_NAME, hasItem(secondDepartmentEmployee))));
+    }
+
+    @Test
+    void shouldUpdateGivenDepartment() throws Exception {
+        // given :
+        Department aDepartment = departmentRepository.save(aDepartmentWithOnlyName(DEPARTMENT_NAME));
+        String departmentUri = DEPARTMENTS_URI + "/" + aDepartment.getId();
+
+        // when :
+        ResultActions result = mockMvc.perform(put(departmentUri)
+                .param(DEPARTMENT_ID_PARAM_NAME, aDepartment.getId().toString())
+                .param(DEPARTMENT_NAME_PARAM_NAME, NEW_DEPARTMENT_NAME)
+                .param(DEPARTMENT_MANAGER_ID_PARAM_NAME, NEW_DEPARTMENT_MANAGER_ID));
+
+        // then :
+        result.andExpect(status().is3xxRedirection());
+        Department updated = departmentRepository.findById(aDepartment.getId()).get();
+        assertEquals(NEW_DEPARTMENT_NAME, updated.getName());
+        assertEquals(NEW_DEPARTMENT_MANAGER_ID, updated.getManagerId().toString());
     }
 
     private Department createDepartmentWithEmployees(List<Employee> employees) {
