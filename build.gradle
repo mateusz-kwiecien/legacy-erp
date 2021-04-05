@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'pl.mkwiecien'
@@ -25,4 +26,41 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
 }
+
+jacocoTestReport {
+	dependsOn test
+}
+
+jacocoTestCoverageVerification {
+
+	violationRules {
+		rule {
+			excludes = ["pl.mkwiecien.legacyerp.application.*"]
+
+			limit {
+				counter = 'INSTRUCTION'
+				value = 'COVEREDRATIO'
+				minimum = 0.9
+			}
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.9
+			}
+			limit {
+				counter = 'METHOD'
+				value = 'COVEREDRATIO'
+				minimum = 0.9
+			}
+			limit {
+				counter = 'CLASS'
+				value = 'COVEREDRATIO'
+				minimum = 0.9
+			}
+		}
+	}
+}
+
+check.dependsOn jacocoTestCoverageVerification

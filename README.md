@@ -13,11 +13,19 @@ used mostly legacy technologies like Spring MVC
 * Thymeleaf
 * JUnit 5
 
+## Code coverage
+
+In this project I have been used the JaCoCo plugin, with following parameters :
+* Instructions cover ration : 90%
+* Lines cover ration : 90%
+* Methods cover ration : 90%
+* Classes cover ration : 90%
+
 ## Roadmap
 
 #### TODO :
 
-* Add and configure JaCoCo plugin
+* Add GitHub Actions for code coverage badge
 * Update department creating view (assign manager by list, not id input)
 * Add department info to employee view  
 * Add more data in Employee model
@@ -36,3 +44,4 @@ used mostly legacy technologies like Spring MVC
 * ~~Add update and delete department controllers~~
 * ~~Create department view, with number of employees~~
 * ~~Fix deleting employees assigned to department~~
+* ~~Add and configure JaCoCo plugin~~
