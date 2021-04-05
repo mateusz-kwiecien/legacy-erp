@@ -10,11 +10,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.mkwiecien.legacyerp.application.ApplicationTestConfiguration;
+import pl.mkwiecien.legacyerp.domain.department.entity.Department;
+import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.aDepartmentWithOnlyName;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.EMPLOYEES_URI;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployee;
 
@@ -27,6 +30,9 @@ class DeleteEmployeeControllerTest {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     @Test
     void shouldDeleteEmployeeWithGivenId() throws Exception {
@@ -43,6 +49,23 @@ class DeleteEmployeeControllerTest {
         assertTrue(employeeRepository.findById(id).isEmpty());
     }
 
+    @Test
+    void shouldDeleteAssignedEmployee() throws Exception {
+        // given :
+        Department department = departmentRepository.save(aDepartmentWithOnlyName("dep-01"));
+        Employee employee = employeeRepository.save(anEmployee());
+        employee.setDepartment(department);
+        employeeRepository.save(employee);
+
+        // when :
+        String deleteUri = EMPLOYEES_URI + "/" + employee.getId();
+        ResultActions result = mockMvc.perform(delete(deleteUri));
+
+        // then :
+        result.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+        assertTrue(employeeRepository.findById(employee.getId()).isEmpty());
+    }
+
     @BeforeEach
     void setup() {
         cleanup();
@@ -51,6 +74,7 @@ class DeleteEmployeeControllerTest {
     @AfterEach
     void cleanup() {
         employeeRepository.deleteAll();
+        departmentRepository.deleteAll();
     }
 
 }
