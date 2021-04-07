@@ -13,6 +13,16 @@ used mostly legacy technologies like Spring MVC
 * Thymeleaf
 * JUnit 5
 
+## Local run :
+
+### Linux :
+
+To run this application locally just type 
+
+`sh gradlew bootRun` 
+
+in the application main directory
+
 ## Code coverage
 
 In this project I have been used the JaCoCo plugin, with following parameters :
@@ -25,15 +35,21 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
-* Add GitHub Actions for code coverage badge
+* Add statistics on main page
+* Employee should be manager in only one department - fix
+* Add employee and department model documentation
+* Add checkstyle
 * Update department creating view (assign manager by list, not id input)
-* Add department info to employee view  
 * Add more data in Employee model
 * Add pagination to lists (e.g. employees list)
 * Add sorting option for lists
 * Improve app view style
-* Add manual for local run with other db
 * Release first version on Heroku
+
+#### IN PROGRESS :
+
+* Add GitHub Actions for code coverage badge
+* Add manual for local run with other db
 
 #### DONE :
 * ~~Add validation handling for creating employee~~
@@ -45,3 +61,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Create department view, with number of employees~~
 * ~~Fix deleting employees assigned to department~~
 * ~~Add and configure JaCoCo plugin~~
+* ~~Add department info to employee view~~

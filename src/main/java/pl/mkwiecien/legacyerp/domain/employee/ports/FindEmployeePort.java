@@ -1,6 +1,7 @@
 package pl.mkwiecien.legacyerp.domain.employee.ports;
 
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
+import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeListView;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +13,6 @@ public interface FindEmployeePort {
     List<Employee> findAll();
 
     List<Employee> findAllByDepartmentId(Long departmentId);
+
+    List<EmployeeListView> findAllAndMapToView();
 }
