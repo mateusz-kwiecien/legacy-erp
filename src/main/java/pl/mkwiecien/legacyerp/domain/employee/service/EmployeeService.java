@@ -1,11 +1,11 @@
 package pl.mkwiecien.legacyerp.domain.employee.service;
 
-import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder;
+import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeListView;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
 import pl.mkwiecien.legacyerp.domain.employee.ports.CreateEmployeePort;
 import pl.mkwiecien.legacyerp.domain.employee.ports.FindEmployeePort;
@@ -52,6 +52,15 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
         return employeeRepository.findAllByDepartmentId(departmentId);
     }
 
+    @Override
+    public List<EmployeeListView> findAllAndMapToView() {
+        List<Employee> employees = employeeRepository.findAll();
+        List<Department> departments = findDepartmentPort.retrieveAll();
+        return employees.stream()
+                .map(employee -> toView(employee, departments))
+                .collect(Collectors.toList());
+    }
+
     public Employee update(Long employeeId, EmployeeRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);
@@ -60,6 +69,28 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
 
     public void deleteEmployee(Long employeeId) {
         employeeRepository.deleteById(employeeId);
+    }
+
+    public EmployeeListView toView(Employee employee, List<Department> departments) {
+        String departmentName = retrieveDepartmentNameFrom(employee);
+        String subordinateDepartment = retrieveSubordinateDepartmentName(employee, departments);
+        return new EmployeeListView(employee.getId(), employee.getFullName(), employee.getEmail(),
+                departmentName, subordinateDepartment);
+    }
+
+    private String retrieveDepartmentNameFrom(Employee employee) {
+        return employee.getDepartment() != null
+                ? employee.getDepartment().getName()
+                : "";
+    }
+
+    private String retrieveSubordinateDepartmentName(Employee employee, List<Department> departments) {
+        return departments.stream()
+                .filter(department -> department.getManagerId() != null)
+                .filter(department -> department.getManagerId().equals(employee.getId()))
+                .findFirst()
+                .map(Department::getName)
+                .orElse("");
     }
 
     private Employee createFrom(EmployeeRequest request) {
