@@ -35,8 +35,8 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
+* Add custom templates for errors
 * Add statistics on main page
-* Employee should be manager in only one department - fix
 * Add employee and department model documentation
 * Add checkstyle
 * Update department creating view (assign manager by list, not id input)
@@ -62,3 +62,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Fix deleting employees assigned to department~~
 * ~~Add and configure JaCoCo plugin~~
 * ~~Add department info to employee view~~
+* ~~Employee should be manager in only one department - fix~~

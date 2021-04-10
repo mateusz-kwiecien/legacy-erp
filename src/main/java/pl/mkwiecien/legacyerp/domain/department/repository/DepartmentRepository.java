@@ -18,4 +18,6 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     void deleteAll();
 
     Optional<Department> findByName(String name);
+
+    Optional<Department> findByManagerId(Long managerId);
 }

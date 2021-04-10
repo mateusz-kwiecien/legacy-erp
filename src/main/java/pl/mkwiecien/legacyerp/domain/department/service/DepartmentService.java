@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentListView;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentRequest;
+import pl.mkwiecien.legacyerp.domain.department.ports.CreateDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.ports.UpdateDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentDAO;
@@ -19,9 +20,9 @@ import java.util.stream.Collectors;
 import static pl.mkwiecien.legacyerp.domain.department.entity.Department.Builder.builder;
 
 @Service
-public class DepartmentService implements FindDepartmentPort, UpdateDepartmentPort {
+public class DepartmentService implements CreateDepartmentPort, FindDepartmentPort, UpdateDepartmentPort {
 
-    private final DepartmentRepository repository;
+    private final DepartmentRepository departmentRepository;
 
     private final DepartmentDAO departmentDAO;
 
@@ -29,44 +30,47 @@ public class DepartmentService implements FindDepartmentPort, UpdateDepartmentPo
 
     public DepartmentService(DepartmentRepository repository, DepartmentDAO departmentDAO,
                              EmployeeRepository employeeRepository) {
-        this.repository = repository;
+        this.departmentRepository = repository;
         this.departmentDAO = departmentDAO;
         this.employeeRepository = employeeRepository;
     }
 
     @Override
     public Optional<Department> findById(Long departmentId) {
-        return repository.findById(departmentId);
+        return departmentRepository.findById(departmentId);
     }
 
     @Override
     public List<Department> retrieveAll() {
-        return repository.findAll();
+        return departmentRepository.findAll();
     }
 
     @Override
     public List<DepartmentListView> retrieveAllViews() {
         List<Employee> employees = employeeRepository.findAll();
-        return repository.findAll().stream()
+        return departmentRepository.findAll().stream()
                 .map(department -> toView(department, employees))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Department retrieveByName(String name) {
-        return repository.findByName(name)
+        return departmentRepository.findByName(name)
                 .orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
     public void update(DepartmentRequest request) {
-        Department department = repository.findById(request.getId())
+        assertCorrectManagerAssignment(request);
+        Department department = departmentRepository.findById(request.getId())
                 .orElseThrow(IllegalArgumentException::new);
-        repository.save(updateFrom(department, request));
+        departmentRepository.save(updateFrom(department, request));
     }
 
+    @Override
     public Department create(DepartmentRequest request) {
-        return repository.save(from(request));
+        assertCorrectManagerAssignment(request);
+        return departmentRepository.save(from(request));
     }
 
     public void delete(Long id) {
@@ -78,6 +82,12 @@ public class DepartmentService implements FindDepartmentPort, UpdateDepartmentPo
                 .orElseThrow(IllegalArgumentException::new);
         employee.setDepartment(null);
         employeeRepository.save(employee);
+    }
+
+    private void assertCorrectManagerAssignment(DepartmentRequest request) {
+        if (departmentRepository.findByManagerId(request.getManagerId()).isPresent()) {
+            throw new IllegalArgumentException("Employee can be manager in only one department.");
+        }
     }
 
     private Department from(DepartmentRequest request) {

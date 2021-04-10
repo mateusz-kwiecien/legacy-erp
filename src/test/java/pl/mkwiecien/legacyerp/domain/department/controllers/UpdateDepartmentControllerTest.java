@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.util.NestedServletException;
 import pl.mkwiecien.legacyerp.application.ApplicationTestConfiguration;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
@@ -21,11 +22,12 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
+import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployeeWith;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
@@ -88,6 +90,21 @@ class UpdateDepartmentControllerTest {
         Department updated = departmentRepository.findById(aDepartment.getId()).get();
         assertEquals(NEW_DEPARTMENT_NAME, updated.getName());
         assertEquals(NEW_DEPARTMENT_MANAGER_ID, updated.getManagerId().toString());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenManagerIsAssignmentToOtherDepartment() throws Exception {
+        // given :
+        Employee manager = employeeRepository.save(anEmployeeWith("John", "Doe", "john.doe@example.com"));
+        departmentRepository.save(aDepartmentWith("dep-01", manager.getId()));
+        Department newDepartment = departmentRepository.save(aDepartmentWithOnlyName(DEPARTMENT_NAME));
+        String departmentUri = DEPARTMENTS_URI + "/" + newDepartment.getId();
+
+        // then :
+        assertThrows(NestedServletException.class, () -> mockMvc.perform(put(departmentUri)
+                .param(DEPARTMENT_ID_PARAM_NAME, newDepartment.getId().toString())
+                .param(DEPARTMENT_NAME_PARAM_NAME, NEW_DEPARTMENT_NAME)
+                .param(DEPARTMENT_MANAGER_ID_PARAM_NAME, manager.getId().toString())));
     }
 
     private Department createDepartmentWithEmployees(List<Employee> employees) {

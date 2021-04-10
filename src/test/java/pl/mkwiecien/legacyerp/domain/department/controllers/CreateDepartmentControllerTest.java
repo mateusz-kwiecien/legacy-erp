@@ -9,13 +9,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.util.NestedServletException;
 import pl.mkwiecien.legacyerp.application.ApplicationTestConfiguration;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
+import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
+import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEPARTMENTS_URI;
-import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.DEFAULT_DEPARTMENT_NAME;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
+import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployeeWith;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
@@ -26,6 +30,9 @@ class CreateDepartmentControllerTest {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Test
     void shouldCreateNewDepartmentFromRequestAndSaveInRepository() throws Exception {
@@ -42,6 +49,18 @@ class CreateDepartmentControllerTest {
         Assertions.assertEquals(1, departmentRepository.count());
     }
 
+    @Test
+    void shouldThrowExceptionWhenManagerIsAssignmentToOtherDepartment() throws Exception {
+        // given :
+        Employee manager = employeeRepository.save(anEmployeeWith("John", "Doe", "john.doe@example.com"));
+        departmentRepository.save(aDepartmentWith("dep-01", manager.getId()));
+
+        // then :
+        assertThrows(NestedServletException.class, () -> mockMvc.perform(post(DEPARTMENTS_URI)
+                .param("managerId", manager.getId().toString())
+                .param("name", DEFAULT_DEPARTMENT_NAME)));
+    }
+
     @BeforeEach
     void setup() {
         cleanup();
@@ -49,6 +68,7 @@ class CreateDepartmentControllerTest {
 
     @AfterEach
     void cleanup() {
+        employeeRepository.deleteAll();
         departmentRepository.deleteAll();
     }
 }
