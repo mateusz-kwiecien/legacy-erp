@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LegacyERP</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="error-container">
+    <div class="error-window">
+        <h2>WE ARE SORRY</h2><br>
+        <span th:if="${message}">
+            <span th:text="${message}"/>
+        </span>
+        <span th:unless="${message}">
+            Unexpected error has occurred.
+        </span><br>
+        Go back to <a href="/">main page</a>
+    </div>
+</div>
+
+</body>
+</html>

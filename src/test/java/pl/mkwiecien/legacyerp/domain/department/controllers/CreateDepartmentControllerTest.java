@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.util.NestedServletException;
 import pl.mkwiecien.legacyerp.application.ApplicationTestConfiguration;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
@@ -50,15 +51,18 @@ class CreateDepartmentControllerTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenManagerIsAssignmentToOtherDepartment() throws Exception {
+    void shouldReturnErrorWhenManagerIsAssignmentToOtherDepartment() throws Exception {
         // given :
         Employee manager = employeeRepository.save(anEmployeeWith("John", "Doe", "john.doe@example.com"));
         departmentRepository.save(aDepartmentWith("dep-01", manager.getId()));
 
-        // then :
-        assertThrows(NestedServletException.class, () -> mockMvc.perform(post(DEPARTMENTS_URI)
+        // when :
+        ResultActions result = mockMvc.perform(post(DEPARTMENTS_URI)
                 .param("managerId", manager.getId().toString())
-                .param("name", DEFAULT_DEPARTMENT_NAME)));
+                .param("name", DEFAULT_DEPARTMENT_NAME));
+
+        // then :
+        result.andExpect(MockMvcResultMatchers.view().name("error"));
     }
 
     @BeforeEach
