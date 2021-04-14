@@ -35,7 +35,6 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
-* Add custom templates for errors
 * Add statistics on main page
 * Add employee and department model documentation
 * Add checkstyle
@@ -63,3 +62,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Add and configure JaCoCo plugin~~
 * ~~Add department info to employee view~~
 * ~~Employee should be manager in only one department - fix~~
+* ~~Add custom templates for errors~~

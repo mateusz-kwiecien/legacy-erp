@@ -54,3 +54,36 @@
     font-size: 15px;
     color: red;
 }
+
+.error-container
+{
+
+}
+
+.error-window
+{
+    color: white;
+    background-color: #DA4453;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    padding: 50px;
+}
+
+.error-window a
+{
+    color: #f1f1f1;
+}
+
+.error-window a.active
+{
+    color: #f1f1f1;
+}
+
+.error-window a:hover
+{
+    color: #f1f1f1;
+}
