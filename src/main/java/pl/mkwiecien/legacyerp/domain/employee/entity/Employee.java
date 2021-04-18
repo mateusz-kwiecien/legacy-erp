@@ -93,7 +93,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id.equals(employee.id);
+        return Objects.equals(id, employee.id);
     }
 
     @Override

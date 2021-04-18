@@ -35,10 +35,10 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
+* Assert unique department name
 * Add statistics on main page
 * Add employee and department model documentation
 * Add checkstyle
-* Update department creating view (assign manager by list, not id input)
 * Add more data in Employee model
 * Add pagination to lists (e.g. employees list)
 * Add sorting option for lists
@@ -63,3 +63,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Add department info to employee view~~
 * ~~Employee should be manager in only one department - fix~~
 * ~~Add custom templates for errors~~
+* ~~Change manager id text inputs for select option list~~

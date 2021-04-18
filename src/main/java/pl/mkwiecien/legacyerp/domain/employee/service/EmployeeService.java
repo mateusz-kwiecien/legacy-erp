@@ -78,6 +78,21 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
                 departmentName, subordinateDepartment);
     }
 
+    public List<Employee> findAllPotentialManagers() {
+        List<Long> managersIds = retrieveManagerIds();
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> !managersIds.contains(employee.getId()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Long> retrieveManagerIds() {
+        return findDepartmentPort.retrieveAll()
+                .stream()
+                .map(Department::getManagerId)
+                .collect(Collectors.toList());
+    }
+
     private String retrieveDepartmentNameFrom(Employee employee) {
         return employee.getDepartment() != null
                 ? employee.getDepartment().getName()

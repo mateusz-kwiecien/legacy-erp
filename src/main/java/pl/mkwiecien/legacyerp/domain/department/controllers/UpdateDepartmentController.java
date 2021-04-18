@@ -18,7 +18,8 @@ public class UpdateDepartmentController {
 
     private final UpdateDepartmentPort updateDepartmentPort;
 
-    public UpdateDepartmentController(FindDepartmentPort findDepartmentPort, UpdateDepartmentPort updateDepartmentPort) {
+    public UpdateDepartmentController(FindDepartmentPort findDepartmentPort,
+                                      UpdateDepartmentPort updateDepartmentPort) {
         this.findDepartmentPort = findDepartmentPort;
         this.updateDepartmentPort = updateDepartmentPort;
     }
