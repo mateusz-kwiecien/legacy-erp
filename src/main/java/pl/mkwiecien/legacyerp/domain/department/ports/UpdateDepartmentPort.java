@@ -4,5 +4,5 @@ import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentRequest;
 
 public interface UpdateDepartmentPort {
 
-    void update(DepartmentRequest request);
+    void update(DepartmentRequest departmentRequest);
 }

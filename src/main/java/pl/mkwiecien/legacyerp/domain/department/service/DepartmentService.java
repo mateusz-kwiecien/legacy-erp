@@ -61,15 +61,21 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
 
     @Override
     public void update(DepartmentRequest request) {
-        assertCorrectManagerAssignment(request);
         Department department = departmentRepository.findById(request.getId())
                 .orElseThrow(IllegalArgumentException::new);
-        departmentRepository.save(updateFrom(department, request));
+        if (request.getManagerId() != null && !request.getManagerId().equals(department.getManagerId())) {
+            assertCorrectManagerAssignment(request.getManagerId());
+            department.setManagerId(request.getManagerId());
+        }
+        if (!request.getName().isEmpty() && !request.getName().equals(department.getName())) {
+            department.setName(request.getName());
+        }
+        departmentRepository.save(department);
     }
 
     @Override
     public Department create(DepartmentRequest request) {
-        assertCorrectManagerAssignment(request);
+        assertCorrectManagerAssignment(request.getManagerId());
         return departmentRepository.save(from(request));
     }
 
@@ -84,8 +90,8 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
         employeeRepository.save(employee);
     }
 
-    private void assertCorrectManagerAssignment(DepartmentRequest request) {
-        if (departmentRepository.findByManagerId(request.getManagerId()).isPresent()) {
+    private void assertCorrectManagerAssignment(Long managerId) {
+        if (managerId != null && departmentRepository.findByManagerId(managerId).isPresent()) {
             throw new IllegalArgumentException("Employee can be manager in only one department.");
         }
     }
@@ -97,12 +103,6 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
                 .managerId(request.getManagerId())
                 .employees(Collections.emptySet())
                 .build();
-    }
-
-    private Department updateFrom(Department department, DepartmentRequest request) {
-        department.setName(request.getName());
-        department.setManagerId(request.getManagerId());
-        return department;
     }
 
     private DepartmentListView toView(Department department, List<Employee> employees) {

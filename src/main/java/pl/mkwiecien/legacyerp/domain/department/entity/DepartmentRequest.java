@@ -19,13 +19,6 @@ public class DepartmentRequest {
     public DepartmentRequest() {
     }
 
-    private DepartmentRequest(Long id, @NotNull(message = "Department name is required") String name, Long managerId, Set<Employee> employees) {
-        this.id = id;
-        this.name = name;
-        this.managerId = managerId;
-        this.employees = employees;
-    }
-
     public Long getId() {
         return id;
     }
@@ -56,52 +49,5 @@ public class DepartmentRequest {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
-    }
-
-    public static DepartmentRequest from(Department department) {
-        return Builder.builder()
-                .id(department.getId())
-                .name(department.getName())
-                .managerId(department.getManagerId())
-                .employees(department.getEmployees())
-                .build();
-    }
-
-    public static final class Builder {
-        private Long id;
-        private String name;
-        private Long managerId;
-        private Set<Employee> employees;
-
-        private Builder() {
-        }
-
-        public static Builder builder() {
-            return new Builder();
-        }
-
-        public Builder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder managerId(Long managerId) {
-            this.managerId = managerId;
-            return this;
-        }
-
-        public Builder employees(Set<Employee> employees) {
-            this.employees = employees;
-            return this;
-        }
-
-        public DepartmentRequest build() {
-            return new DepartmentRequest(id, name, managerId, employees);
-        }
     }
 }

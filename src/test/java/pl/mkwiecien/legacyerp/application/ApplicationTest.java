@@ -19,4 +19,9 @@ class ApplicationTest {
 	void contextLoads() {
 		Assertions.assertNotNull(context);
 	}
+
+	@Test
+	void applicationRuns() {
+		Application.main(new String[] {});
+	}
 }

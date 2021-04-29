@@ -61,6 +61,15 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Employee> findAllPotentialManagers() {
+        List<Long> managersIds = retrieveManagerIds();
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> !managersIds.contains(employee.getId()))
+                .collect(Collectors.toList());
+    }
+
     public Employee update(Long employeeId, EmployeeRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);
@@ -76,14 +85,6 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
         String subordinateDepartment = retrieveSubordinateDepartmentName(employee, departments);
         return new EmployeeListView(employee.getId(), employee.getFullName(), employee.getEmail(),
                 departmentName, subordinateDepartment);
-    }
-
-    public List<Employee> findAllPotentialManagers() {
-        List<Long> managersIds = retrieveManagerIds();
-        return employeeRepository.findAll()
-                .stream()
-                .filter(employee -> !managersIds.contains(employee.getId()))
-                .collect(Collectors.toList());
     }
 
     private List<Long> retrieveManagerIds() {

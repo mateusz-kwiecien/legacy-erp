@@ -15,4 +15,6 @@ public interface FindEmployeePort {
     List<Employee> findAllByDepartmentId(Long departmentId);
 
     List<EmployeeListView> findAllAndMapToView();
+
+    List<Employee> findAllPotentialManagers();
 }

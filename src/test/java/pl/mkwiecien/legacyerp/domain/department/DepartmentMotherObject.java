@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Set;
 
 public class DepartmentMotherObject {
+    public static final String DEPARTMENT_REQUEST_PARAMETER_NAME = "departmentRequest";
     public static final String DEPARTMENTS_PARAMETER_NAME = "departments";
     public static final String DEPARTMENTS_URI = "/departments";
     public static final String DEFAULT_DEPARTMENT_NAME = "departmentName";
