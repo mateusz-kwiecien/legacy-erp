@@ -18,28 +18,26 @@
         </div>
     </div>
     <div class="content">
-        <h2>Update department : </h2>
-        <form th:action="@{/departments/{id}(id=${departmentRequest.id})}" th:object="${departmentRequest}"
-              method="post">
+        <h2>Department details : </h2>
+
+        <form th:action="@{/departments}" th:object="${departmentRequest}" method="post">
             <div class="form">
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" th:field="*{id}" th:value="${departmentRequest.id}">
-                <label>Name : </label><br>
+                <label>Department ID : </label>
+                <span th:text="${departmentRequest.id}"/><br>
+                <label>Department Name : </label>
                 <input type="text" th:field="*{name}">
                 <span th:errors="*{name}" th:errorclass="inputError"></span><br>
-
-                <label>Manager ID :</label><br>
-                <input type="text" th:field="*{managerId}">
-                <span th:errors="*{managerId}" th:errorclass="inputError"></span><br>
-
-                <label>Department Manager : </label><br>
+                <label>Department Manager : </label>
                 <select th:field="*{managerId}">
                     <option th:each="manager : ${potentialManagers}" th:value="${manager.id}" th:text="${manager.fullName}"/>
                 </select>
-
-                <input type="submit" value="Save"/>
+                <br>
+                <input type="submit" value="Update"/>
             </div>
         </form>
+
         <table>
             <thead>
             <tr th:if="${not #arrays.isEmpty(departmentRequest.employees)}">

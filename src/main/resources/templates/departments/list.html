@@ -36,7 +36,7 @@
                 <td><span th:text="${department.name}"/></td>
                 <td><span th:text="${department.manager}"/></td>
                 <td><span th:text="${department.employees}"/></td>
-                <td><a th:href="@{/departments/{departmentId}/details(departmentId=${department.id})}">Details</a></td>
+                <td><a th:href="@{/departments/{departmentId}(departmentId=${department.id})}">Details</a></td>
                 <td>
                     <form th:action="@{/departments/{id}(id=${department.id})}" th:method="delete">
                         <input type="submit" value="DELETE"/>
