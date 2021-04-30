@@ -32,9 +32,20 @@
                 <label>Email :</label><br>
                 <input type="text" th:field="*{email}">
                 <span th:errors="*{email}" th:errorclass="inputError"></span><br>
-                <label>Department Name :</label><br>
-                <input type="text" th:field="*{departmentName}"><br>
-                <input type="submit" value="Save"/>
+
+                <label>Department Name :</label>
+                <span th:if="${#arrays.isEmpty(departments)}">
+                    <b>No departments available.</b>
+                </span>
+                <br>
+                <span th:if="${not #arrays.isEmpty(departments)}">
+                    <select th:field="*{departmentName}">
+                        <option value="">"No Department"</option>
+                        <option th:each="department : ${departments}" th:value="${department}" th:text="${department}"/>
+                    </select>
+                </span>
+                <br>
+                <input type="submit" value="Update"/>
             </div>
         </form>
     </div>

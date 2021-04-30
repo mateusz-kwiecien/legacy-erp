@@ -5,23 +5,32 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
 import pl.mkwiecien.legacyerp.domain.employee.service.EmployeeService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/employees")
 public class UpdateEmployeeController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
-    public UpdateEmployeeController(EmployeeService employeeService) {
+    private final FindDepartmentPort findDepartmentPort;
+
+    public UpdateEmployeeController(EmployeeService employeeService, FindDepartmentPort findDepartmentPort) {
         this.employeeService = employeeService;
+        this.findDepartmentPort = findDepartmentPort;
     }
 
     @GetMapping("/details")
     public String retrieveEmployeesDetails(Model model, @RequestParam(value = "id", required = false) Long employeeId) {
         model.addAttribute("employeeRequest", retrieveFrom(employeeId));
+        List<String> departments = findDepartmentPort.retrieveAllNames();
+        model.addAttribute("departments", departments);
+        System.out.println(model);
         return "employees/details";
     }
 
