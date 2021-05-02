@@ -1,10 +1,7 @@
 package pl.mkwiecien.legacyerp.domain.employee.entity;
 
-import pl.mkwiecien.legacyerp.domain.department.entity.Department;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
 
 public class EmployeeRequest {
 

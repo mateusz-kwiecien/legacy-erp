@@ -15,4 +15,6 @@ public interface FindDepartmentPort {
     Department retrieveByName(String name);
 
     Optional<Department> findById(Long departmentId);
+
+    List<String> retrieveAllNames();
 }

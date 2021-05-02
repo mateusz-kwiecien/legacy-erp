@@ -41,6 +41,11 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
     }
 
     @Override
+    public List<String> retrieveAllNames() {
+        return departmentRepository.retrieveAllDepartmentNames();
+    }
+
+    @Override
     public List<Department> retrieveAll() {
         return departmentRepository.findAll();
     }

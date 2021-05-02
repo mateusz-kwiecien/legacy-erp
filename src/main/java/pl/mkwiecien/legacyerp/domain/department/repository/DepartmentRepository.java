@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     Optional<Department> findByName(String name);
 
     Optional<Department> findByManagerId(Long managerId);
+
+    @Query("SELECT d.name FROM Department as d")
+    List<String> retrieveAllDepartmentNames();
 }
