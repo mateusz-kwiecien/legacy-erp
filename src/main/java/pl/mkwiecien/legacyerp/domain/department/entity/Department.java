@@ -29,13 +29,6 @@ public class Department {
     public Department() {
     }
 
-    private Department(Long id, String name, Long managerId, Set<Employee> employees) {
-        this.id = id;
-        this.name = name;
-        this.managerId = managerId;
-        this.employees = employees;
-    }
-
     public Long getId() {
         return id;
     }
@@ -80,14 +73,6 @@ public class Department {
 
         public static Builder builder() {
             return new Builder();
-        }
-
-        public Builder from(Department department) {
-            this.id = department.getId();
-            this.name = department.getName();
-            this.managerId = department.getManagerId();
-            this.employees = department.getEmployees();
-            return this;
         }
 
         public Builder id(Long id) {

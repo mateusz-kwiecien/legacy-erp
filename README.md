@@ -35,7 +35,7 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
-* Assert unique department name
+* Add manual for local run with other db
 * Add statistics on main page
 * Add employee and department model documentation
 * Add checkstyle
@@ -48,7 +48,6 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 #### IN PROGRESS :
 
 * Add GitHub Actions for code coverage badge
-* Add manual for local run with other db
 
 #### DONE :
 * ~~Add validation handling for creating employee~~
@@ -64,3 +63,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Employee should be manager in only one department - fix~~
 * ~~Add custom templates for errors~~
 * ~~Change manager id text inputs for select option list~~
+* ~~Assert unique department name~~
