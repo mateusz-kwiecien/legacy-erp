@@ -72,6 +72,22 @@ class UpdateDepartmentControllerTest {
         result.andExpect(MockMvcResultMatchers.view().name("error"));
     }
 
+    @Test
+    void shouldReturnErrorDepartmentNameIsAlreadyUsed() throws Exception {
+        // given :
+        String existingName = "existingName";
+        departmentRepository.save(aDepartmentWithOnlyName(existingName));
+        Department newDepartment = departmentRepository.save(aDepartmentWithOnlyName(NEW_DEPARTMENT_NAME));
+
+        // when :
+        ResultActions result = mockMvc.perform(put(DEPARTMENTS_URI)
+                .param("id", newDepartment.getId().toString())
+                .param("name", existingName));
+
+        // then :
+        result.andExpect(MockMvcResultMatchers.view().name("error"));
+    }
+
     @BeforeEach
     void setup() {
         cleanup();

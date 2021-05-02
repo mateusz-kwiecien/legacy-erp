@@ -73,6 +73,7 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
             department.setManagerId(request.getManagerId());
         }
         if (!request.getName().isEmpty() && !request.getName().equals(department.getName())) {
+            assertUniqueName(request.getName());
             department.setName(request.getName());
         }
         departmentRepository.save(department);
@@ -81,6 +82,7 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
     @Override
     public Department create(DepartmentRequest request) {
         assertCorrectManagerAssignment(request.getManagerId());
+        assertUniqueName(request.getName());
         return departmentRepository.save(from(request));
     }
 
@@ -98,6 +100,12 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
     private void assertCorrectManagerAssignment(Long managerId) {
         if (managerId != null && departmentRepository.findByManagerId(managerId).isPresent()) {
             throw new IllegalArgumentException("Employee can be manager in only one department.");
+        }
+    }
+
+    private void assertUniqueName(String name) {
+        if (name != null && departmentRepository.findByName(name).isPresent()) {
+            throw new IllegalArgumentException("Department with name like this already exists.");
         }
     }
 

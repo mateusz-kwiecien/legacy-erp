@@ -84,6 +84,20 @@ class CreateDepartmentControllerTest {
         result.andExpect(MockMvcResultMatchers.view().name("error"));
     }
 
+    @Test
+    void shouldReturnErrorWhenDepartmentNameIsAlreadyUsed() throws Exception {
+        // given :
+        String existingName = "dep-01";
+        departmentRepository.save(aDepartmentWithOnlyName(existingName));
+
+        // when :
+        ResultActions result = mockMvc.perform(post(DEPARTMENTS_URI)
+                .param("name", existingName));
+
+        // then :
+        result.andExpect(MockMvcResultMatchers.view().name("error"));
+    }
+
     @BeforeEach
     void setup() {
         cleanup();
