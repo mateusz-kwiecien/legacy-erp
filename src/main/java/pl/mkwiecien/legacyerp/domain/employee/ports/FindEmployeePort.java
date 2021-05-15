@@ -17,4 +17,6 @@ public interface FindEmployeePort {
     List<EmployeeListView> findAllAndMapToView();
 
     List<Employee> findAllPotentialManagers();
+
+    Long countAllEmployees();
 }

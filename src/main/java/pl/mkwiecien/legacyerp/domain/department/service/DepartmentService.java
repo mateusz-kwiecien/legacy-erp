@@ -86,6 +86,11 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
         return departmentRepository.save(from(request));
     }
 
+    @Override
+    public Long countAllDepartments() {
+        return departmentRepository.count();
+    }
+
     public void delete(Long id) {
         departmentDAO.deleteDepartmentById(id);
     }

@@ -36,7 +36,6 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 #### TODO :
 
 * Add manual for local run with other db
-* Add statistics on main page
 * Add employee and department model documentation
 * Add checkstyle
 * Add more data in Employee model
@@ -64,3 +63,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Add custom templates for errors~~
 * ~~Change manager id text inputs for select option list~~
 * ~~Assert unique department name~~
+* ~~Add statistics on main page~~

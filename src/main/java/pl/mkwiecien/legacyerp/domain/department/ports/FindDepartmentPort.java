@@ -17,4 +17,6 @@ public interface FindDepartmentPort {
     Optional<Department> findById(Long departmentId);
 
     List<String> retrieveAllNames();
+
+    Long countAllDepartments();
 }

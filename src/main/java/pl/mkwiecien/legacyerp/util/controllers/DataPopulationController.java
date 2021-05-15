@@ -21,6 +21,6 @@ public class DataPopulationController {
     @PostMapping("/employees")
     public String populateApplicationWithEmployees(ModelAndView modelAndView) {
         populationService.populateWithRandomData(Optional.of(20));
-        return "index";
+        return "redirect:/";
     }
 }
