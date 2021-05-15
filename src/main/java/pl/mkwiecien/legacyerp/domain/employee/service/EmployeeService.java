@@ -70,6 +70,11 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Long countAllEmployees() {
+        return employeeRepository.count();
+    }
+
     public Employee update(Long employeeId, EmployeeRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);

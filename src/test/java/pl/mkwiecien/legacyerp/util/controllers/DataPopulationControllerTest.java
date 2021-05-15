@@ -35,7 +35,7 @@ class DataPopulationControllerTest {
         ResultActions result = mockMvc.perform(post(dataPopulationUri));
 
         // then :
-        result.andExpect(status().is2xxSuccessful());
+        result.andExpect(status().is3xxRedirection());
         Assertions.assertEquals(defaultEmployeesAmount, employeeRepository.count());
     }
 
