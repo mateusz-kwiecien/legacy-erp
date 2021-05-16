@@ -22,6 +22,7 @@ public class ResourcesDataService implements GetResourcesDataPort {
     public ResourcesData getResources() {
         Long departmentsNumber = departmentPort.countAllDepartments();
         Long employeesNumber = employeePort.countAllEmployees();
-        return new ResourcesData(employeesNumber, departmentsNumber);
+        Long unassignedEmployeesNumber = employeePort.countAllUnassignedEmployees();
+        return new ResourcesData(employeesNumber, unassignedEmployeesNumber, departmentsNumber);
     }
 }

@@ -19,4 +19,6 @@ public interface FindEmployeePort {
     List<Employee> findAllPotentialManagers();
 
     Long countAllEmployees();
+
+    Long countAllUnassignedEmployees();
 }

@@ -1,14 +1,13 @@
 package pl.mkwiecien.legacyerp.util.values;
 
 public class ResourcesData {
-    private Long employeesNumber;
-    private Long departmentsNumber;
+    private final Long employeesNumber;
+    private final Long unassignedEmployeesNumber;
+    private final Long departmentsNumber;
 
-    public ResourcesData() {
-    }
-
-    public ResourcesData(Long employeesNumber, Long departmentsNumber) {
+    public ResourcesData(Long employeesNumber, Long unassignedEmployeesNumber, Long departmentsNumber) {
         this.employeesNumber = employeesNumber;
+        this.unassignedEmployeesNumber = unassignedEmployeesNumber;
         this.departmentsNumber = departmentsNumber;
     }
 
@@ -16,15 +15,11 @@ public class ResourcesData {
         return employeesNumber;
     }
 
-    public void setEmployeesNumber(Long employeesNumber) {
-        this.employeesNumber = employeesNumber;
-    }
-
     public Long getDepartmentsNumber() {
         return departmentsNumber;
     }
 
-    public void setDepartmentsNumber(Long departmentsNumber) {
-        this.departmentsNumber = departmentsNumber;
+    public Long getUnassignedEmployeesNumber() {
+        return unassignedEmployeesNumber;
     }
 }
