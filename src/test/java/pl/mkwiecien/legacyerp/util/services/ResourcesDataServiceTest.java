@@ -1,9 +1,7 @@
 package pl.mkwiecien.legacyerp.util.services;
 
-import java.util.List;
-
-import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
-import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.*;
+import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.aDepartmentWith;
+import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployeeWith;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -34,27 +32,21 @@ class ResourcesDataServiceTest {
     @Test
     void shouldRetrieveCorrectResourcesData() throws Exception {
         // given :
-        employeeRepository.saveAll(anEmployeeList());
-        departmentRepository.saveAll(aDepartmentList());
+        Employee manager = employeeRepository.save(anEmployeeWith("John", "Doe", "john.doe@example.com"));
+        employeeRepository.save(anEmployeeWith("Marla", "Singer", "marla.singer@example.com"));
+        Employee assignedEmployee = employeeRepository.save(anEmployeeWith("Diego", "Sanchez", "diego.sanchez@example.com"));
+
+        Department department = departmentRepository.save(aDepartmentWith("dep-01", manager.getId()));
+        assignedEmployee.setDepartment(department);
+        employeeRepository.save(assignedEmployee);
 
         // when :
         ResourcesData resourcesData = resourcesDataPort.getResources();
 
         // then :
         Assertions.assertEquals(3, resourcesData.getEmployeesNumber());
-        Assertions.assertEquals(2, resourcesData.getDepartmentsNumber());
-    }
-
-    private List<Employee> anEmployeeList() {
-        return List.of(
-                anEmployeeWith("John", "Doe", "john.doe@example.com"),
-                anEmployeeWith("Marla", "Singer", "marla.singer@example.com"),
-                anEmployeeWith("Diego", "Sanchez", "diego.sanchez@example.com")
-        );
-    }
-
-    private List<Department> aDepartmentList() {
-        return List.of(aDepartmentWithOnlyName("dep-01"), aDepartmentWithOnlyName("dep-02"));
+        Assertions.assertEquals(2, resourcesData.getUnassignedEmployeesNumber());
+        Assertions.assertEquals(1, resourcesData.getDepartmentsNumber());
     }
 
     @BeforeEach

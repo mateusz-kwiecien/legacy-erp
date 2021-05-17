@@ -24,4 +24,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     @Query("SELECT d.name FROM Department as d")
     List<String> retrieveAllDepartmentNames();
+
+    @Query("SELECT COUNT(d) FROM Department d WHERE d.managerId != null")
+    Long countAllManagers();
 }

@@ -25,4 +25,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     void deleteById(@Param("employeeId") Long employeeId);
 
     List<Employee> findAllByDepartmentId(Long departmentId);
+
+    @Query("SELECT COUNT(e) FROM Employee e WHERE e.department = null")
+    Long countAllUnassignedEmployees();
 }

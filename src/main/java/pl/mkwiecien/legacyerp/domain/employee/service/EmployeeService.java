@@ -75,6 +75,11 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
         return employeeRepository.count();
     }
 
+    @Override
+    public Long countAllUnassignedEmployees() {
+        return employeeRepository.countAllUnassignedEmployees();
+    }
+
     public Employee update(Long employeeId, EmployeeRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(IllegalArgumentException::new);

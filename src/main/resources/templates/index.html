@@ -21,6 +21,7 @@
         <h2>Main page</h2><br>
 
         Number of all employees : <span th:text="${ResourcesData.employeesNumber}"/><br>
+        Number of unassigned employees : <span th:text="${ResourcesData.unassignedEmployeesNumber}"/><br>
         Number of all departments : <span th:text="${ResourcesData.departmentsNumber}"/><br>
 
         <form th:action="@{/util/populate/employees}" method="post">
