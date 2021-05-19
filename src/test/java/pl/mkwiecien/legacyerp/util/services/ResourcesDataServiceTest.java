@@ -1,7 +1,6 @@
 package pl.mkwiecien.legacyerp.util.services;
 
-import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.aDepartmentWith;
-import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployeeWith;
+import static pl.mkwiecien.legacyerp.util.UtilDataPopulationService.populateWithDefaultData;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -10,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.mkwiecien.legacyerp.application.ApplicationTestConfiguration;
-import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
-import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 import pl.mkwiecien.legacyerp.util.ports.GetResourcesDataPort;
 import pl.mkwiecien.legacyerp.util.values.ResourcesData;
@@ -32,13 +29,7 @@ class ResourcesDataServiceTest {
     @Test
     void shouldRetrieveCorrectResourcesData() throws Exception {
         // given :
-        Employee manager = employeeRepository.save(anEmployeeWith("John", "Doe", "john.doe@example.com"));
-        employeeRepository.save(anEmployeeWith("Marla", "Singer", "marla.singer@example.com"));
-        Employee assignedEmployee = employeeRepository.save(anEmployeeWith("Diego", "Sanchez", "diego.sanchez@example.com"));
-
-        Department department = departmentRepository.save(aDepartmentWith("dep-01", manager.getId()));
-        assignedEmployee.setDepartment(department);
-        employeeRepository.save(assignedEmployee);
+        populateWithDefaultData(employeeRepository, departmentRepository);
 
         // when :
         ResourcesData resourcesData = resourcesDataPort.getResources();
@@ -59,5 +50,4 @@ class ResourcesDataServiceTest {
         employeeRepository.deleteAll();
         departmentRepository.deleteAll();
     }
-
 }

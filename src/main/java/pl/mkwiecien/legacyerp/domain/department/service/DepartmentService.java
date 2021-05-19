@@ -5,6 +5,7 @@ import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentListView;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentRequest;
 import pl.mkwiecien.legacyerp.domain.department.ports.CreateDepartmentPort;
+import pl.mkwiecien.legacyerp.domain.department.ports.DeleteDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.ports.UpdateDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentDAO;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 import static pl.mkwiecien.legacyerp.domain.department.entity.Department.Builder.builder;
 
 @Service
-public class DepartmentService implements CreateDepartmentPort, FindDepartmentPort, UpdateDepartmentPort {
+public class DepartmentService implements CreateDepartmentPort, FindDepartmentPort, UpdateDepartmentPort, DeleteDepartmentPort {
 
     private final DepartmentRepository departmentRepository;
 
@@ -89,6 +90,11 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
     @Override
     public Long countAllDepartments() {
         return departmentRepository.count();
+    }
+
+    @Override
+    public void deleteAllDepartments() {
+        departmentRepository.deleteAll();
     }
 
     public void delete(Long id) {

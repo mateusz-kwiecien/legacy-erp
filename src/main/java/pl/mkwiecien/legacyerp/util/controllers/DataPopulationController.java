@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequestMapping("/util/populate")
 public class DataPopulationController {
 
-    private DataPopulationService populationService;
+    private final DataPopulationService populationService;
 
     public DataPopulationController(DataPopulationService populationService) {
         this.populationService = populationService;

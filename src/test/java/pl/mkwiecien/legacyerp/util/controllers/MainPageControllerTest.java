@@ -24,11 +24,9 @@ class MainPageControllerTest {
     private static final String RESOURCES_DATA_ATTRIBUTE_NAME = "ResourcesData";
     private static final String EMPLOYEES_NUMBER_PARAMETER_NAME = "employeesNumber";
     private static final String UNASSIGNED_EMPLOYEES_NUMBER_PARAMETER_NAME = "unassignedEmployeesNumber";
-    private static final String MANAGERS_NUMBER_PARAMETER_NAME = "managersNumber";
     private static final String DEPARTMENTS_NUMBER_PARAMETER_NAME = "departmentsNumber";
     private static final Long EMPLOYEES_NUMBER = 15L;
     private static final Long UNASSIGNED_EMPLOYEES_NUMBER = 3L;
-    private static final Long MANAGERS_NUMBER = 5L;
     private static final Long DEPARTMENTS_NUMBER = 5L;
 
     @Autowired

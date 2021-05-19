@@ -34,7 +34,16 @@ public class DepartmentMotherObject {
     }
 
     public static Department aDepartmentWith(String name, Long managerId, Set<Employee> employees) {
+        return aDepartmentWith(null, name, managerId, employees);
+    }
+
+    public static Department aDepartmentWith(Long id, String name, Long managerId) {
+        return aDepartmentWith(id, name, managerId, Collections.emptySet());
+    }
+
+    public static Department aDepartmentWith(Long id, String name, Long managerId, Set<Employee> employees) {
         return Department.Builder.builder()
+                .id(id)
                 .name(name)
                 .managerId(managerId)
                 .employees(employees)
