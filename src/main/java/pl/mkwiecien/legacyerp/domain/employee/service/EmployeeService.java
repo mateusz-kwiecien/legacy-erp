@@ -2,12 +2,14 @@ package pl.mkwiecien.legacyerp.domain.employee.service;
 
 import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
+import pl.mkwiecien.legacyerp.domain.department.ports.DeleteDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeListView;
 import pl.mkwiecien.legacyerp.domain.employee.entity.EmployeeRequest;
 import pl.mkwiecien.legacyerp.domain.employee.ports.CreateEmployeePort;
+import pl.mkwiecien.legacyerp.domain.employee.ports.DeleteEmployeePort;
 import pl.mkwiecien.legacyerp.domain.employee.ports.FindEmployeePort;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
@@ -16,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
+public class EmployeeService implements CreateEmployeePort, FindEmployeePort, DeleteEmployeePort {
 
     private final EmployeeRepository employeeRepository;
 
@@ -78,6 +80,11 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort {
     @Override
     public Long countAllUnassignedEmployees() {
         return employeeRepository.countAllUnassignedEmployees();
+    }
+
+    @Override
+    public void deleteAllEmployees() {
+        employeeRepository.deleteAll();
     }
 
     public Employee update(Long employeeId, EmployeeRequest request) {

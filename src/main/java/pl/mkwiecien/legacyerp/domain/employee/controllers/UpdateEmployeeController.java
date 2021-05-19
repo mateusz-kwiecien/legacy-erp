@@ -30,7 +30,6 @@ public class UpdateEmployeeController {
         model.addAttribute("employeeRequest", retrieveFrom(employeeId));
         List<String> departments = findDepartmentPort.retrieveAllNames();
         model.addAttribute("departments", departments);
-        System.out.println(model);
         return "employees/details";
     }
 

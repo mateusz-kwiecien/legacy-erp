@@ -35,9 +35,9 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
+* Remove CircleCI
 * Add manual for local run with other db
 * Add employee and department model documentation
-* Add checkstyle
 * Add more data in Employee model
 * Add pagination to lists (e.g. employees list)
 * Add sorting option for lists
@@ -64,3 +64,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Change manager id text inputs for select option list~~
 * ~~Assert unique department name~~
 * ~~Add statistics on main page~~
+* ~~Add restore defaults controller~~

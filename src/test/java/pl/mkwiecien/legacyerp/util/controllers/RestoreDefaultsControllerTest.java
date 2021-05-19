@@ -1,7 +1,11 @@
 package pl.mkwiecien.legacyerp.util.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.mkwiecien.legacyerp.util.UtilDataPopulationService.populateWithDefaultData;
+
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.mkwiecien.legacyerp.application.ApplicationTestConfiguration;
+import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
-class DataPopulationControllerTest {
+class RestoreDefaultsControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -25,18 +27,22 @@ class DataPopulationControllerTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     @Test
-    void shouldPopulateApplicationWithRandomEmployees() throws Exception {
+    void shouldRemoveAllEmployeesAndDepartments() throws Exception {
         // given :
-        String dataPopulationUri = "/util/populate/employees";
-        Long defaultEmployeesAmount = 20L;
+        populateWithDefaultData(employeeRepository, departmentRepository);
+        String restoreDefaultsUri = "/util/restore-defaults";
 
         // when :
-        ResultActions result = mockMvc.perform(post(dataPopulationUri));
+        ResultActions result = mockMvc.perform(post(restoreDefaultsUri));
 
         // then :
         result.andExpect(status().is3xxRedirection());
-        Assertions.assertEquals(defaultEmployeesAmount, employeeRepository.count());
+        assertEquals(0, employeeRepository.count());
+        assertEquals(0, departmentRepository.count());
     }
 
     @BeforeEach
@@ -47,5 +53,6 @@ class DataPopulationControllerTest {
     @AfterEach
     void cleanup() {
         employeeRepository.deleteAll();
+        departmentRepository.deleteAll();
     }
 }
