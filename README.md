@@ -1,7 +1,8 @@
 # legacy-erp [![mateusz-kwiecien](https://circleci.com/gh/mateusz-kwiecien/legacy-erp.svg?style=shield)](https://app.circleci.com/pipelines/github/mateusz-kwiecien/legacy-erp?branch=master)
 
-**Legacy ERP** is a simple Java project, just for learning and practicing purposes. There has been
-used mostly legacy technologies like Spring MVC
+**Legacy ERP** is a simple Java project for learning and practicing purposes. 
+There has been used some legacy technologies like Spring MVC, the Thousand Islands architecture
+pattern and Thymeleaf instead of any regular frontend framework.
 
 ## Technologies
 
