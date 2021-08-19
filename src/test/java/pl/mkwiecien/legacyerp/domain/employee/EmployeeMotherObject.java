@@ -3,6 +3,9 @@ package pl.mkwiecien.legacyerp.domain.employee;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder.builder;
 
 public class EmployeeMotherObject {
@@ -43,5 +46,13 @@ public class EmployeeMotherObject {
                 .email(email)
                 .department(department)
                 .build();
+    }
+
+    public static List<Employee> anEmployeeFakeList(int range) {
+        List<Employee> employees = new ArrayList<>();
+        for (int i = 1; i <= range; i++) {
+            employees.add(anEmployeeWith("firstName-" + i, "lastName-" + i, "email-" + i));
+        }
+        return employees;
     }
 }

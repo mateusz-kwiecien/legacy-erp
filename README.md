@@ -36,11 +36,11 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
+* Add UML Class diagram
 * Remove CircleCI
 * Add manual for local run with other db
 * Add employee and department model documentation
 * Add more data in Employee model
-* Add pagination to lists (e.g. employees list)
 * Add sorting option for lists
 * Improve app view style
 * Release first version on Heroku
@@ -66,3 +66,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Assert unique department name~~
 * ~~Add statistics on main page~~
 * ~~Add restore defaults controller~~
+* ~~Add pagination to lists (e.g. employees list)~~
