@@ -29,10 +29,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${#arrays.isEmpty(employees)}">
+            <tr th:if="${#arrays.isEmpty(employeesPage)}">
                 <td colspan="2"> No Employees Available</td>
             </tr>
-            <tr th:each="employee : ${employees}">
+            <tr th:each="employee : ${employeesPage}">
                 <td><span th:text="${employee.id}"/></td>
                 <td><span th:text="${employee.fullName}"/></td>
                 <td><span th:text="${employee.email}"/></td>
@@ -47,6 +47,30 @@
             </tr>
             </tbody>
         </table>
+        <div class="pagination">
+            <span th:if="${employeesPage.hasPrevious()}">
+                <a th:href="@{/employees?page={pageIndex}&size=20(pageIndex=${employeesPage.number})}">Previous</a>
+            </span>
+
+            <span>
+                Page no. <span th:text="${employeesPage.number + 1}"/> of total
+                <span th:if="${employeesPage.getTotalPages() == 0}">1</span>
+                <span th:if="${employeesPage.getTotalPages() != 0}">
+                    <span th:text="${employeesPage.getTotalPages()}"/>
+                </span>
+            </span>
+
+
+<!--            <th:block th:each="i: ${#numbers.sequence(0, employeesPage.totalPages - 1)}">-->
+<!--                <span th:if="${employeesPage.number == i}" class="selected">[[${i}+1]]</span>-->
+<!--                <span th:unless="${employeesPage.number == i}">-->
+<!--                <a th:href="@{/employees(page=${i},size=${employeesPage.size})}">[[${i}+1]]</a>-->
+<!--                </span>-->
+<!--            </th:block>-->
+            <span th:if="${employeesPage.hasNext()}">
+        <a th:href="@{/employees?page={pageIndex}&size=20(pageIndex=${employeesPage.number}+2)}">Next</a>
+    </span>
+        </div>
     </div>
 </div>
 

@@ -1,8 +1,10 @@
 package pl.mkwiecien.legacyerp.domain.employee.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
-import pl.mkwiecien.legacyerp.domain.department.ports.DeleteDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.department.ports.FindDepartmentPort;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee.Builder;
@@ -61,6 +63,17 @@ public class EmployeeService implements CreateEmployeePort, FindEmployeePort, De
         return employees.stream()
                 .map(employee -> toView(employee, departments))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<EmployeeListView> findAllAndMapToView(Pageable pageable) {
+        List<Department> departments = findDepartmentPort.retrieveAll();
+        Page<Employee> page = employeeRepository.findAll(pageable);
+        List<EmployeeListView> content = page.getContent().stream()
+                .map(employee -> toView(employee, departments))
+                .collect(Collectors.toList());
+
+        return new PageImpl<EmployeeListView>(content, pageable, page.getTotalElements());
     }
 
     @Override
