@@ -31,7 +31,7 @@ import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmpl
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
-class EmployeeListControllerTest {
+class GetEmployeeListControllerTest {
     private static final String EMPTY_VALUE = "";
 
     @Autowired

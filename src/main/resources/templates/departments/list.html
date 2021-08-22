@@ -28,10 +28,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${#arrays.isEmpty(departments)}">
+            <tr th:if="${#arrays.isEmpty(departmentsPage)}">
                 <td colspan="2"> No Departments Available</td>
             </tr>
-            <tr th:each="department : ${departments}">
+            <tr th:each="department : ${departmentsPage}">
                 <td><span th:text="${department.id}"/></td>
                 <td><span th:text="${department.name}"/></td>
                 <td><span th:text="${department.manager}"/></td>
@@ -45,6 +45,25 @@
             </tr>
             </tbody>
         </table>
+
+        <div class="pagination">
+            <span th:if="${departmentsPage.hasPrevious()}">
+                <a th:href="@{/departments?page={pageIndex}&size=20(pageIndex=${departmentsPage.number})}">Previous</a>
+            </span>
+
+            <span>
+                Page no. <span th:text="${departmentsPage.number + 1}"/> of total
+                <span th:if="${departmentsPage.getTotalPages() == 0}">1</span>
+                <span th:if="${departmentsPage.getTotalPages() != 0}">
+                    <span th:text="${departmentsPage.getTotalPages()}"/>
+                </span>
+            </span>
+
+            <span th:if="${departmentsPage.hasNext()}">
+                <a th:href="@{/departments?page={pageIndex}&size=20(pageIndex=${departmentsPage.number}+2)}">Next</a>
+            </span>
+        </div>
+
     </div>
 </div>
 

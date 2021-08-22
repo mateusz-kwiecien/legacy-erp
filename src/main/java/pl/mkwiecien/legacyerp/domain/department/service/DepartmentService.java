@@ -1,5 +1,7 @@
 package pl.mkwiecien.legacyerp.domain.department.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentListView;
@@ -16,7 +18,6 @@ import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static pl.mkwiecien.legacyerp.domain.department.entity.Department.Builder.builder;
 
@@ -52,11 +53,11 @@ public class DepartmentService implements CreateDepartmentPort, FindDepartmentPo
     }
 
     @Override
-    public List<DepartmentListView> retrieveAllViews() {
+    public Page<DepartmentListView> retrieveAllViews(Pageable pageable) {
         List<Employee> employees = employeeRepository.findAll();
-        return departmentRepository.findAll().stream()
-                .map(department -> toView(department, employees))
-                .collect(Collectors.toList());
+        Page<Department> departmentsPage = departmentRepository.findAll(pageable);
+
+        return departmentsPage.map(department -> toView(department, employees));
     }
 
     @Override
