@@ -1,5 +1,7 @@
 package pl.mkwiecien.legacyerp.domain.department.ports;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.mkwiecien.legacyerp.domain.department.entity.Department;
 import pl.mkwiecien.legacyerp.domain.department.entity.DepartmentListView;
 
@@ -10,7 +12,7 @@ public interface FindDepartmentPort {
 
     List<Department> retrieveAll();
 
-    List<DepartmentListView> retrieveAllViews();
+    Page<DepartmentListView> retrieveAllViews(Pageable pageable);
 
     Department retrieveByName(String name);
 

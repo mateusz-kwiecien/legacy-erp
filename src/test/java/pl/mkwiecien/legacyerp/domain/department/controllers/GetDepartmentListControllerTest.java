@@ -1,6 +1,5 @@
 package pl.mkwiecien.legacyerp.domain.department.controllers;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -27,7 +27,7 @@ import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmpl
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = {ApplicationTestConfiguration.class})
-class DepartmentListControllerTest {
+class GetDepartmentListControllerTest {
     private static final String FIRST_DEPARTMENT_NAME = "dep-01";
     private static final String SECOND_DEPARTMENT_NAME = "dep-02";
     private static final String MANAGER_FIRST_NAME = "John";
@@ -56,11 +56,12 @@ class DepartmentListControllerTest {
         ResultActions result = mockMvc.perform(get(DEPARTMENTS_URI));
 
         // then :
-        result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(MockMvcResultMatchers.model().attribute("departments", Matchers.hasSize(2)));
-        List<DepartmentListView> retrievedDepartments = (List<DepartmentListView>)
-                result.andReturn().getModelAndView().getModel().get(DEPARTMENTS_PARAMETER_NAME);
-        retrievedDepartments.sort(Comparator.comparing(DepartmentListView::getId));
+        result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+        PageImpl<DepartmentListView> page = (PageImpl<DepartmentListView>) result.andReturn().getModelAndView().getModel().get("departmentsPage");
+        Assertions.assertTrue(page.isLast());
+        Assertions.assertEquals(2, page.getTotalElements());
+
+        List<DepartmentListView> retrievedDepartments = page.getContent();
         Assertions.assertEquals(retrievedDepartments.get(0).getName(), FIRST_DEPARTMENT_NAME);
         Assertions.assertEquals(retrievedDepartments.get(0).getManager(), MANAGER_FIRST_NAME + " " + MANAGER_LAST_NAME);
         Assertions.assertEquals(retrievedDepartments.get(0).getEmployees(), 2);

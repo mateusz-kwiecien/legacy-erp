@@ -11,11 +11,11 @@ import pl.mkwiecien.legacyerp.domain.employee.service.EmployeeService;
 
 @Controller
 @RequestMapping("/employees")
-public class EmployeeListController {
+public class GetEmployeeListController {
 
     private EmployeeService employeeService;
 
-    public EmployeeListController(EmployeeService employeeService) {
+    public GetEmployeeListController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
