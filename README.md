@@ -1,4 +1,4 @@
-# legacy-erp [![mateusz-kwiecien](https://circleci.com/gh/mateusz-kwiecien/legacy-erp.svg?style=shield)](https://app.circleci.com/pipelines/github/mateusz-kwiecien/legacy-erp?branch=master)
+# legacy-erp
 
 **Legacy ERP** is a simple Java project for learning and practicing purposes. 
 There has been used some legacy technologies like Spring MVC, the Thousand Islands architecture
@@ -37,7 +37,6 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 #### TODO :
 
 * Add UML Class diagram
-* Remove CircleCI
 * Add manual for local run with other db
 * Add employee and department model documentation
 * Add more data in Employee model
@@ -67,3 +66,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Add statistics on main page~~
 * ~~Add restore defaults controller~~
 * ~~Add pagination to lists (e.g. employees list)~~
+* ~~Remove CircleCI~~
