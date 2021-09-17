@@ -18,9 +18,9 @@ import pl.mkwiecien.legacyerp.domain.department.repository.DepartmentRepository;
 import pl.mkwiecien.legacyerp.domain.employee.entity.Employee;
 import pl.mkwiecien.legacyerp.domain.employee.repository.EmployeeRepository;
 
-import java.util.Comparator;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static pl.mkwiecien.legacyerp.domain.department.DepartmentMotherObject.*;
 import static pl.mkwiecien.legacyerp.domain.employee.EmployeeMotherObject.anEmployeeWith;
@@ -59,15 +59,80 @@ class GetDepartmentListControllerTest {
         result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
         PageImpl<DepartmentListView> page = (PageImpl<DepartmentListView>) result.andReturn().getModelAndView().getModel().get("departmentsPage");
         Assertions.assertTrue(page.isLast());
-        Assertions.assertEquals(2, page.getTotalElements());
+        assertEquals(2, page.getTotalElements());
 
         List<DepartmentListView> retrievedDepartments = page.getContent();
-        Assertions.assertEquals(retrievedDepartments.get(0).getName(), FIRST_DEPARTMENT_NAME);
-        Assertions.assertEquals(retrievedDepartments.get(0).getManager(), MANAGER_FIRST_NAME + " " + MANAGER_LAST_NAME);
-        Assertions.assertEquals(retrievedDepartments.get(0).getEmployees(), 2);
-        Assertions.assertEquals(retrievedDepartments.get(1).getName(), SECOND_DEPARTMENT_NAME);
-        Assertions.assertEquals(retrievedDepartments.get(1).getManager(), "");
-        Assertions.assertEquals(retrievedDepartments.get(1).getEmployees(), 0);
+        assertEquals(retrievedDepartments.get(0).getName(), FIRST_DEPARTMENT_NAME);
+        assertEquals(retrievedDepartments.get(0).getManager(), MANAGER_FIRST_NAME + " " + MANAGER_LAST_NAME);
+        assertEquals(retrievedDepartments.get(0).getEmployees(), 2);
+        assertEquals(retrievedDepartments.get(1).getName(), SECOND_DEPARTMENT_NAME);
+        assertEquals(retrievedDepartments.get(1).getManager(), "");
+        assertEquals(retrievedDepartments.get(1).getEmployees(), 0);
+    }
+
+    @Test
+    void shouldHandlePageableListProperlyWithSortByName() throws Exception {
+        // given :
+        List<Department> savedDepartments = departmentRepository.saveAll(sortableDepartments());
+
+        // when :
+        ResultActions result = mockMvc.perform(get(DEPARTMENTS_URI + "?sort=name"));
+
+        // then :
+        result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+        PageImpl<DepartmentListView> page = (PageImpl<DepartmentListView>) result.andReturn().getModelAndView().getModel().get("departmentsPage");
+
+        assertEquals(3, page.getTotalElements());
+        List<DepartmentListView> retrievedDepartments = page.getContent();
+        assertEquals(savedDepartments.get(1).getId(), retrievedDepartments.get(0).getId());
+        assertEquals(savedDepartments.get(2).getId(), retrievedDepartments.get(1).getId());
+        assertEquals(savedDepartments.get(0).getId(), retrievedDepartments.get(2).getId());
+    }
+
+    @Test
+    void shouldHandlePageableListProperlyWithSortByNameDescending() throws Exception {
+        // given :
+        List<Department> savedDepartments = departmentRepository.saveAll(sortableDepartments());
+
+        // when :
+        ResultActions result = mockMvc.perform(get(DEPARTMENTS_URI + "?sort=name,DESC"));
+
+        // then :
+        result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+        PageImpl<DepartmentListView> page = (PageImpl<DepartmentListView>) result.andReturn().getModelAndView().getModel().get("departmentsPage");
+
+        assertEquals(3, page.getTotalElements());
+        List<DepartmentListView> retrievedDepartments = page.getContent();
+        assertEquals(savedDepartments.get(0).getId(), retrievedDepartments.get(0).getId());
+        assertEquals(savedDepartments.get(2).getId(), retrievedDepartments.get(1).getId());
+        assertEquals(savedDepartments.get(1).getId(), retrievedDepartments.get(2).getId());
+    }
+
+    @Test
+    void shouldHandlePageableListProperlyWithSortByIdDescending() throws Exception {
+        // given :
+        List<Department> savedDepartments = departmentRepository.saveAll(sortableDepartments());
+
+        // when :
+        ResultActions result = mockMvc.perform(get(DEPARTMENTS_URI + "?sort=id,DESC"));
+
+        // then :
+        result.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+        PageImpl<DepartmentListView> page = (PageImpl<DepartmentListView>) result.andReturn().getModelAndView().getModel().get("departmentsPage");
+
+        assertEquals(3, page.getTotalElements());
+        List<DepartmentListView> retrievedDepartments = page.getContent();
+        assertEquals(savedDepartments.get(2).getId(), retrievedDepartments.get(0).getId());
+        assertEquals(savedDepartments.get(1).getId(), retrievedDepartments.get(1).getId());
+        assertEquals(savedDepartments.get(0).getId(), retrievedDepartments.get(2).getId());
+    }
+
+    private List<Department> sortableDepartments() {
+        return List.of(
+                aDepartmentWithOnlyName("z-for-zorro-department"),
+                aDepartmentWithOnlyName("abc-department"),
+                aDepartmentWithOnlyName("just-regular-department")
+        );
     }
 
     private static Employee firstDepartmentManager() {
