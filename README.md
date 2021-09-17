@@ -40,13 +40,12 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * Add manual for local run with other db
 * Add employee and department model documentation
 * Add more data in Employee model
-* Add sorting option for lists
 * Improve app view style
 * Release first version on Heroku
 
 #### IN PROGRESS :
 
-* Add GitHub Actions for code coverage badge
+* Add sorting option for lists (add sorting option in templates)
 
 #### DONE :
 * ~~Add validation handling for creating employee~~

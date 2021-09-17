@@ -103,6 +103,60 @@ class GetEmployeeListControllerTest {
         assertEquals(20, page.getSize());
     }
 
+    @Test
+    void shouldProperlyHandlePaginationWithSortParameterLastName() throws Exception {
+        // given :
+        List<Employee> savedEmployees = employeeRepository.saveAll(sortableEmployeeList());
+
+        // when :
+        ResultActions result = mockMvc.perform(get(EMPLOYEES_URI + "?sort=lastName"));
+
+        //then :
+        PageImpl<EmployeeListView> page = (PageImpl<EmployeeListView>) result.andReturn().getModelAndView().getModel().get("employeesPage");
+
+        assertEquals(4, page.getTotalElements());
+        assertEquals(savedEmployees.get(3).getId(), page.getContent().get(0).getId());
+        assertEquals(savedEmployees.get(1).getId(), page.getContent().get(1).getId());
+        assertEquals(savedEmployees.get(2).getId(), page.getContent().get(2).getId());
+        assertEquals(savedEmployees.get(0).getId(), page.getContent().get(3).getId());
+    }
+
+    @Test
+    void shouldProperlyHandlePaginationWithSortParameterFirstName() throws Exception {
+        // given :
+        List<Employee> savedEmployees = employeeRepository.saveAll(sortableEmployeeList());
+
+        // when :
+        ResultActions result = mockMvc.perform(get(EMPLOYEES_URI + "?sort=firstName,DESC"));
+
+        //then :
+        PageImpl<EmployeeListView> page = (PageImpl<EmployeeListView>) result.andReturn().getModelAndView().getModel().get("employeesPage");
+
+        assertEquals(4, page.getTotalElements());
+        assertEquals(savedEmployees.get(2).getId(), page.getContent().get(0).getId());
+        assertEquals(savedEmployees.get(0).getId(), page.getContent().get(1).getId());
+        assertEquals(savedEmployees.get(3).getId(), page.getContent().get(2).getId());
+        assertEquals(savedEmployees.get(1).getId(), page.getContent().get(3).getId());
+    }
+
+    @Test
+    void shouldProperlyHandlePaginationWithSortParameterId() throws Exception {
+        // given :
+        List<Employee> savedEmployees = employeeRepository.saveAll(sortableEmployeeList());
+
+        // when :
+        ResultActions result = mockMvc.perform(get(EMPLOYEES_URI + "?sort=id,DESC"));
+
+        //then :
+        PageImpl<EmployeeListView> page = (PageImpl<EmployeeListView>) result.andReturn().getModelAndView().getModel().get("employeesPage");
+
+        assertEquals(4, page.getTotalElements());
+        assertEquals(savedEmployees.get(3).getId(), page.getContent().get(0).getId());
+        assertEquals(savedEmployees.get(2).getId(), page.getContent().get(1).getId());
+        assertEquals(savedEmployees.get(1).getId(), page.getContent().get(2).getId());
+        assertEquals(savedEmployees.get(0).getId(), page.getContent().get(3).getId());
+    }
+
     private void assignEmployeeToDepartment(Employee employee, Department department) {
         employee.setDepartment(department);
         employeeRepository.save(employee);
@@ -115,6 +169,14 @@ class GetEmployeeListControllerTest {
         assertEquals(employeeListView.getEmail(), employee.getEmail());
         assertEquals(employeeListView.getAssignedDepartment(), assignedDepartment);
         assertEquals(employeeListView.getSubordinateDepartment(), subordinatedDepartment);
+    }
+
+    private List<Employee> sortableEmployeeList() {
+        return List.of(
+                anEmployeeWith("Marc", "Zuckermann", "marczuckermann@example.com"),
+                anEmployeeWith("Abelard", "Johnson", "abelardjohnson@example.com"),
+                anEmployeeWith("Zack", "Marx", "zackmarx@example.com"),
+                anEmployeeWith("Caroll", "Alderin", "carollalderin@example.com"));
     }
 
     @BeforeEach
