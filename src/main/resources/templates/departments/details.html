@@ -10,62 +10,86 @@
 <body>
 
 <div class="container">
-    <div class="container">
-        <div class="navbar">
-            <a href="/">Main</a>
+
+    <div class="navbar">
+
+        <div class="left">
+            legacyERP
+        </div>
+
+        <div class="center">
+            <a class="active" href="/">Main Page</a>
             <a href="/employees">Employees</a>
             <a class="active" href="/departments">Departments</a>
+            <a href="/about">About APP</a>
         </div>
+
+        <div class="right">
+            RIGHT CONTENT
+        </div>
+
     </div>
+
     <div class="content">
-        <h2>Department details : </h2>
 
-        <form th:action="@{/departments}" th:object="${departmentRequest}" method="post">
-            <div class="form">
-                <input type="hidden" name="_method" value="PUT">
-                <input type="hidden" th:field="*{id}" th:value="${departmentRequest.id}">
-                <label>Department ID : </label>
-                <span th:text="${departmentRequest.id}"/><br>
-                <label>Department Name : </label>
-                <input type="text" th:field="*{name}">
-                <span th:errors="*{name}" th:errorclass="inputError"></span><br>
-                <label>Department Manager : </label>
-                <select th:field="*{managerId}">
-                    <option th:each="manager : ${potentialManagers}" th:value="${manager.id}" th:text="${manager.fullName}"/>
-                </select>
-                <br>
-                <input type="submit" value="Update"/>
-            </div>
-        </form>
+        <div class="header">
+            Update department :
+        </div>
 
-        <table>
-            <thead>
-            <tr th:if="${not #arrays.isEmpty(departmentRequest.employees)}">
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-            </tr>
-            <tr th:if="${#arrays.isEmpty(departmentRequest.employees)}">
-                <td colspan="2"><b> No Employees in this department </b></td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="employee : ${departmentRequest.employees}">
-                <td><span th:text="${employee.firstName}"/></td>
-                <td><span th:text="${employee.lastName}"/></td>
-                <td><span th:text="${employee.email}"/></td>
-                <td>
-                    <form th:action="@{/departments/{departmentId}/detach/{employeeId}
-                                            (departmentId=${departmentRequest.id},employeeId=${employee.id})}"
-                          th:object="${departmentRequest}" method="post">
-                        <input type="hidden" name="_method" value="PUT">
-                        <input type="submit" value="Remove"/>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="form">
+            <form th:action="@{/departments}" th:object="${departmentRequest}" method="post">
+                <div class="form">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" th:field="*{id}" th:value="${departmentRequest.id}">
+                    <label>Department ID : </label>
+                    <span th:text="${departmentRequest.id}"/><br>
+                    <label>Department Name : </label>
+                    <input type="text" th:field="*{name}">
+                    <span th:errors="*{name}" th:errorclass="inputError"></span><br>
+                    <label>Department Manager : </label>
+                    <select th:field="*{managerId}">
+                        <option th:each="manager : ${potentialManagers}" th:value="${manager.id}" th:text="${manager.fullName}"/>
+                    </select>
+                    <br>
+                    <input class="button-orange" type="submit" value="Update"/>
+                </div>
+            </form>
+
+            <table>
+                <thead>
+                <tr th:if="${not #arrays.isEmpty(departmentRequest.employees)}">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                </tr>
+                <tr th:if="${#arrays.isEmpty(departmentRequest.employees)}">
+                    <td colspan="2"><b> No Employees in this department </b></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${departmentRequest.employees}">
+                    <td><span th:text="${employee.firstName}"/></td>
+                    <td><span th:text="${employee.lastName}"/></td>
+                    <td><span th:text="${employee.email}"/></td>
+                    <td>
+                        <form th:action="@{/departments/{departmentId}/detach/{employeeId}
+                                                (departmentId=${departmentRequest.id},employeeId=${employee.id})}"
+                              th:object="${departmentRequest}" method="post">
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="submit" value="Remove"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
+
+    <div class="footer">
+        Background photo by Aleksandar Pasaric, source : https://www.pexels.com/photo/view-of-cityscape-325185
+    </div>
+
 </div>
 
 </body>

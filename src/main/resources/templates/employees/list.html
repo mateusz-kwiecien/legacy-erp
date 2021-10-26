@@ -2,61 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Employees list</title>
+    <title>LegacyERP</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com"/>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
+
     <div class="navbar">
-        <a href="/">Main</a>
-        <a class="active" href="/employees">Employees</a>
-        <a href="/departments">Departments</a>
+
+        <div class="left">
+            legacyERP
+        </div>
+
+        <div class="center">
+            <a href="/">Main Page</a>
+            <a class="active" href="/employees">Employees</a>
+            <a href="/departments">Departments</a>
+            <a href="/about">About APP</a>
+        </div>
+
+        <div class="right">
+            RIGHT CONTENT
+        </div>
+
     </div>
+
     <div class="content">
 
-        <h2>Employees list</h2>
-        <a href="/employees/create">Create new</a>
+        <div class="horizontal-aggregator">
 
-        <table>
-            <thead>
-            <tr>
-                <th> ID</th>
-                <th> Full Name</th>
-                <th> Email</th>
-                <th> Assigned Department</th>
-                <th> Subordinated Department</th>
-            </tr>
-            </thead>
+            <div class="actions">
+                <a class="green-button" href="/employees/create">Create new employee</a>
+            </div>
 
-            <tbody>
-            <tr th:if="${#arrays.isEmpty(employeesPage)}">
-                <td colspan="2"> No Employees Available</td>
-            </tr>
-            <tr th:each="employee : ${employeesPage}">
-                <td><span th:text="${employee.id}"/></td>
-                <td><span th:text="${employee.fullName}"/></td>
-                <td><span th:text="${employee.email}"/></td>
-                <td><span th:text="${employee.assignedDepartment}"/></td>
-                <td><span th:text="${employee.subordinateDepartment}"/></td>
-                <td><a th:href="@{/employees/details?id={id}(id=${employee.id})}">Update</a></td>
-                <td>
-                    <form th:action="@{/employees/{id}(id=${employee.id})}" th:method="delete">
-                        <input type="submit" value="DELETE"/>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <div class="header">
+                List of all employees
+            </div>
 
-        <div class="pagination">
+            <div class="pagination">
             <span th:if="${employeesPage.hasPrevious()}">
-                <a th:href="@{/employees?page={pageIndex}&size=20(pageIndex=${employeesPage.number})}">Previous</a>
+                <a th:href="@{/employees?page={pageIndex}&size=20(pageIndex=${employeesPage.number})}"> << Previous </a>
             </span>
 
-            <span>
+                <span>
                 Page no. <span th:text="${employeesPage.number + 1}"/> of total
                 <span th:if="${employeesPage.getTotalPages() == 0}">1</span>
                 <span th:if="${employeesPage.getTotalPages() != 0}">
@@ -64,11 +55,52 @@
                 </span>
             </span>
 
-            <span th:if="${employeesPage.hasNext()}">
-                <a th:href="@{/employees?page={pageIndex}&size=20(pageIndex=${employeesPage.number}+2)}">Next</a>
+                <span th:if="${employeesPage.hasNext()}">
+                <a th:href="@{/employees?page={pageIndex}&size=20(pageIndex=${employeesPage.number}+2)}"> Next >> </a>
             </span>
+            </div>
+
         </div>
+
+        <div class="list">
+            <table>
+                <thead>
+                <tr>
+                    <th> ID</th>
+                    <th> Full Name</th>
+                    <th> Email</th>
+                    <th> Assigned Department</th>
+                    <th> Subordinated Department</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:if="${#arrays.isEmpty(employeesPage)}">
+                    <td colspan="2"> No Employees Available</td>
+                </tr>
+                <tr th:each="employee : ${employeesPage}">
+                    <td><span th:text="${employee.id}"/></td>
+                    <td><span th:text="${employee.fullName}"/></td>
+                    <td><span th:text="${employee.email}"/></td>
+                    <td><span th:text="${employee.assignedDepartment}"/></td>
+                    <td><span th:text="${employee.subordinateDepartment}"/></td>
+                    <td><a class="update-button" th:href="@{/employees/details?id={id}(id=${employee.id})}">UPDATE</a></td>
+                    <td>
+                        <form th:action="@{/employees/{id}(id=${employee.id})}" th:method="delete">
+                            <input class="delete-button" type="submit" value="DELETE"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
+
+    <div class="footer">
+        Background photo by Aleksandar Pasaric, source : https://www.pexels.com/photo/view-of-cityscape-325185
+    </div>
+
 </div>
 
 </body>

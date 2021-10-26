@@ -40,12 +40,9 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * Add manual for local run with other db
 * Add employee and department model documentation
 * Add more data in Employee model
-* Improve app view style
 * Release first version on Heroku
 
 #### IN PROGRESS :
-
-* Add sorting option for lists (add sorting option in templates)
 
 #### DONE :
 * ~~Add validation handling for creating employee~~
@@ -66,3 +63,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Add restore defaults controller~~
 * ~~Add pagination to lists (e.g. employees list)~~
 * ~~Remove CircleCI~~
+* ~~Improve app view style~~

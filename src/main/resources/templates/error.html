@@ -9,17 +9,53 @@
 </head>
 <body>
 
-<div class="error-container">
-    <div class="error-window">
-        <h2>WE ARE SORRY</h2><br>
-        <span th:if="${message}">
-            <span th:text="${message}"/>
-        </span>
-        <span th:unless="${message}">
-            Unexpected error has occurred.
-        </span><br>
-        Go back to <a href="/">main page</a>
+<div class="container">
+
+    <div class="navbar">
+
+        <div class="left">
+            legacyERP
+        </div>
+
+        <div class="center">
+            <a href="/">Main Page</a>
+            <a href="/employees">Employees</a>
+            <a href="/departments">Departments</a>
+            <a href="/about">About APP</a>
+        </div>
+
+        <div class="right">
+            RIGHT CONTENT
+        </div>
+
     </div>
+
+    <div class="content">
+
+        <div class="error-message">
+
+            <div class="header">
+                We are sorry
+            </div>
+
+            <div class="text">
+            <span th:if="${message}">
+                <span th:text="${message}"/>
+            </span>
+                <span th:unless="${message}">
+                Unexpected error has occurred.
+            </span>
+                <br>Go back to <a href="/">main page</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Background photo by Aleksandar Pasaric, source : https://www.pexels.com/photo/view-of-cityscape-325185
+    </div>
+
 </div>
 
 </body>
