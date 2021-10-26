@@ -2,69 +2,103 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Employees list</title>
+    <title>LegacyERP</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com"/>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
+
     <div class="navbar">
-        <a href="/">Main</a>
-        <a href="/employees">Employees</a>
-        <a class="active" href="/departments">Departments</a>
-    </div>
-    <div class="content">
-        <h2>Departments list</h2>
-        <a href="/departments/create">Create new</a>
-        <table>
-            <thead>
-            <tr>
-                <th> ID</th>
-                <th> Name</th>
-                <th> Manager full name</th>
-                <th> Number of employees</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${#arrays.isEmpty(departmentsPage)}">
-                <td colspan="2"> No Departments Available</td>
-            </tr>
-            <tr th:each="department : ${departmentsPage}">
-                <td><span th:text="${department.id}"/></td>
-                <td><span th:text="${department.name}"/></td>
-                <td><span th:text="${department.manager}"/></td>
-                <td><span th:text="${department.employees}"/></td>
-                <td><a th:href="@{/departments/{departmentId}(departmentId=${department.id})}">Details</a></td>
-                <td>
-                    <form th:action="@{/departments/{id}(id=${department.id})}" th:method="delete">
-                        <input type="submit" value="DELETE"/>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
 
-        <div class="pagination">
-            <span th:if="${departmentsPage.hasPrevious()}">
-                <a th:href="@{/departments?page={pageIndex}&size=20(pageIndex=${departmentsPage.number})}">Previous</a>
-            </span>
+        <div class="left">
+            legacyERP
+        </div>
 
-            <span>
-                Page no. <span th:text="${departmentsPage.number + 1}"/> of total
-                <span th:if="${departmentsPage.getTotalPages() == 0}">1</span>
-                <span th:if="${departmentsPage.getTotalPages() != 0}">
-                    <span th:text="${departmentsPage.getTotalPages()}"/>
-                </span>
-            </span>
+        <div class="center">
+            <a class="active" href="/">Main Page</a>
+            <a href="/employees">Employees</a>
+            <a class="active" href="/departments">Departments</a>
+            <a href="/about">About APP</a>
+        </div>
 
-            <span th:if="${departmentsPage.hasNext()}">
-                <a th:href="@{/departments?page={pageIndex}&size=20(pageIndex=${departmentsPage.number}+2)}">Next</a>
-            </span>
+        <div class="right">
+            RIGHT CONTENT
         </div>
 
     </div>
+
+    <div class="content">
+
+        <div class="horizontal-aggregator">
+
+            <div class="actions">
+                <a class="green-button" href="/departments/create">Create new department</a>
+            </div>
+
+            <div class="header">
+                Departments list
+            </div>
+
+            <div class="pagination">
+                <span th:if="${departmentsPage.hasPrevious()}">
+                    <a th:href="@{/departments?page={pageIndex}&size=20(pageIndex=${departmentsPage.number})}">Previous</a>
+                </span>
+
+                <span>
+                    Page no. <span th:text="${departmentsPage.number + 1}"/> of total
+                    <span th:if="${departmentsPage.getTotalPages() == 0}">1</span>
+                    <span th:if="${departmentsPage.getTotalPages() != 0}">
+                        <span th:text="${departmentsPage.getTotalPages()}"/>
+                    </span>
+                </span>
+
+                <span th:if="${departmentsPage.hasNext()}">
+                    <a th:href="@{/departments?page={pageIndex}&size=20(pageIndex=${departmentsPage.number}+2)}">Next</a>
+                </span>
+            </div>
+
+        </div>
+
+        <div class="list">
+            <table>
+                <thead>
+                <tr>
+                    <th> ID</th>
+                    <th> Name</th>
+                    <th> Manager full name</th>
+                    <th> Number of employees</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#arrays.isEmpty(departmentsPage)}">
+                    <td colspan="2"> No Departments Available</td>
+                </tr>
+                <tr th:each="department : ${departmentsPage}">
+                    <td><span th:text="${department.id}"/></td>
+                    <td><span th:text="${department.name}"/></td>
+                    <td><span th:text="${department.manager}"/></td>
+                    <td><span th:text="${department.employees}"/></td>
+                    <td><a class="update-button" th:href="@{/departments/{departmentId}(departmentId=${department.id})}">UPDATE</a></td>
+                    <td>
+                        <form th:action="@{/departments/{id}(id=${department.id})}" th:method="delete">
+                            <input class="delete-button" type="submit" value="DELETE"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div class="footer">
+        Background photo by Aleksandar Pasaric, source : https://www.pexels.com/photo/view-of-cityscape-325185
+    </div>
+
 </div>
 
 </body>

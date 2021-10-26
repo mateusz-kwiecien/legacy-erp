@@ -18,10 +18,10 @@
         </div>
 
         <div class="center">
-            <a class="active" href="/">Main Page</a>
+            <a href="/">Main Page</a>
             <a href="/employees">Employees</a>
             <a href="/departments">Departments</a>
-            <a href="/about">About APP</a>
+            <a class="active" href="/about">About APP</a>
         </div>
 
         <div class="right">
@@ -33,23 +33,11 @@
     <div class="content">
 
         <div class="header">
-            Application's dashboard
+            About application
         </div>
 
         <div class="text">
-            Number of all employees : <span th:text="${ResourcesData.employeesNumber}"/><br>
-            Number of unassigned employees : <span th:text="${ResourcesData.unassignedEmployeesNumber}"/><br>
-            Number of all departments : <span th:text="${ResourcesData.departmentsNumber}"/>
-        </div>
-
-        <div class="actions">
-            <form th:action="@{/util/populate/employees}" method="post">
-                <input class="button-green" type="submit" value="Populate"/>
-            </form>
-
-            <form th:action="@{/util/restore-defaults}" method="post">
-                <input class="button-orange" type="submit" value="Restore Defaults"/>
-            </form>
+            Text
         </div>
 
     </div>
