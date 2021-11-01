@@ -292,6 +292,13 @@ input.button-orange:hover
     justify-content: center;
 }
 
+.navbar .right img
+{
+    height: 40px;
+    weight: 40px;
+    margin: 5px;
+}
+
 .footer
 {
     height: 20px;
