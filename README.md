@@ -64,3 +64,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Add pagination to lists (e.g. employees list)~~
 * ~~Remove CircleCI~~
 * ~~Improve app view style~~
+* ~~Add about app info~~
