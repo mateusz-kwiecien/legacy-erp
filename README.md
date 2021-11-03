@@ -37,9 +37,7 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 #### TODO :
 
 * Add UML Class diagram
-* Add manual for local run with other db
 * Add employee and department model documentation
-* Add more data in Employee model
 * Release first version on Heroku
 
 #### IN PROGRESS :
@@ -65,3 +63,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Remove CircleCI~~
 * ~~Improve app view style~~
 * ~~Add about app info~~
+* ~~Add right content section~~
