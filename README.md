@@ -14,15 +14,28 @@ pattern and Thymeleaf instead of any regular frontend framework.
 * Thymeleaf
 * JUnit 5
 
-## Local run :
+## Documentation
 
-### Linux :
+There are two main classes, which are database entities. Employees can be aggregated in departments, 
+which has unique departments name and managersId. It is a simple relation one-to-many, where one 
+department has many employees (but of course can have no employees at all).
+
+![Class diagram](docs/uml_class_diagram.png)
+
+For easy start there is a population option on the main page, which populate application with random
+employees. 
+
+## Local run :
 
 To run this application locally just type 
 
-`sh gradlew bootRun` 
+`sh gradlew bootRun` - when using Linux
+
+`./gradlew.bat bootRun` - when using Windows
 
 in the application main directory
+
+Application will start using default http port - `localhost:8080`
 
 ## Code coverage
 
@@ -36,11 +49,11 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 
 #### TODO :
 
-* Add UML Class diagram
-* Add employee and department model documentation
-* Release first version on Heroku
+`nothing`
 
 #### IN PROGRESS :
+
+`nothing`
 
 #### DONE :
 * ~~Add validation handling for creating employee~~
@@ -64,3 +77,4 @@ In this project I have been used the JaCoCo plugin, with following parameters :
 * ~~Improve app view style~~
 * ~~Add about app info~~
 * ~~Add right content section~~
+* ~~Add employee and department model documentation~~
